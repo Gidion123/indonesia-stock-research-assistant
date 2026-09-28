@@ -1,0 +1,165 @@
+Validation on 27 September 2026. Python 3.11 environment; HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1; local PostgreSQL, real configured LLM key.
+
+COMMAND: pytest -q --tb=short -rs
+........................................................................ [ 18%]
+........................................................................ [ 37%]
+........................................................sss............. [ 55%]
+........................................................................ [ 74%]
+..............................................................s......... [ 93%]
+...........................                                              [100%]
+=========================== short test summary info ============================
+SKIPPED [1] tests/test_market_data.py:403: test live dijalankan manual: pytest -m live
+SKIPPED [1] tests/test_market_data.py:417: test live dijalankan manual: pytest -m live
+SKIPPED [1] tests/test_market_data.py:435: test live dijalankan manual: pytest -m live
+SKIPPED [1] tests/test_retriever.py:93: BIPI ada di data/knowledge_base/additional dan bersifat opt-in. Aktifkan dengan INCLUDE_ADDITIONAL_DOCUMENTS=true lalu ingest ulang.
+383 passed, 4 skipped in 57.91s
+
+
+COMMAND: python -m scripts.build_gold_chunks
+Memuat & membersihkan knowledge base...
+  PDF                       : 5
+  Halaman total             : 117
+  Halaman dipakai           : 105
+  Halaman dibuang (pustaka) : 12
+  Halaman dipotong          : 5
+  Marker sitasi dibuang     : 202
+  Kata patah diperbaiki     : 0
+  Chunk                     : 489
+
+Menurunkan gold chunk dari expected_keywords...
+
+=== AUDIT GOLD CHUNK ===
+  Pertanyaan in-scope       : 28
+  Gold mode strict          : 27
+  Gold mode relaxed         : 1
+  Tanpa gold chunk          : 0
+  Rata-rata gold per soal   : 2.86
+  Gold terbanyak            : 12
+
+Gold annotation disimpan ke: /Users/gidion/Downloads/project-intelligence-customer-assistant/rag-stock-customer-assistant/evaluation/dataset/gold_chunks.json
+File ini boleh dikoreksi manual. Metrik akan memakai isinya apa adanya.
+
+
+COMMAND: python -m scripts.evaluate
+Memuat evaluation dataset...
+  Sumber: /Users/gidion/Downloads/project-intelligence-customer-assistant/rag-stock-customer-assistant/evaluation/dataset/eval_questions.json
+Jumlah pertanyaan: 33
+Menjalankan retrieval evaluation...
+
+=== RETRIEVAL EVALUATION (level chunk) ===
+  Pertanyaan total       : 33
+  Pertanyaan in-scope    : 28
+  Pertanyaan dinilai     : 28
+  Gold chunk total       : 80
+  Gold mode strict       : 27
+  Gold mode relaxed      : 1
+  Tanpa gold             : 0
+  Rata-rata gold/soal    : 2.86
+
+    k    HitRate     Recall  Precision
+    1     0.3214     0.1515     0.3214
+    3     0.5357     0.2717     0.2262
+    5     0.7857     0.4741     0.2071
+    8     0.8571     0.5693     0.1473
+
+  MRR                    : 0.4712
+
+  --- level sumber (pembanding historis, JANGAN dikutip) ---
+  HitRate@8 (sumber)     : 1.0000
+  Recall@8 (sumber)      : 1.0000
+  MRR (sumber)           : 0.9464
+
+  Gagal HitRate@8        : 4
+    ihsg_02        gold tidak ada di top-8
+      Apa faktor utama yang memengaruhi IHSG pada 2026?
+    equity_03      gold tidak ada di top-8
+      Bagaimana kondisi dan risiko saham BUMI?
+    dc_01          gold tidak ada di top-8
+      Apa keunggulan penjualan lahan data center bagi kawasan industri, dari sisi premi harga dan margin laba kotor menurut riset?
+    dc_05          gold tidak ada di top-8
+      Bagaimana pendapatan dan laba bersih DMAS pada semester I-2026 menurut riset data center, termasuk pertumbuhan tahunannya?
+
+  --- perbandingan dengan run sebelumnya ---
+  Dataset evaluasi sama (eeae64b5f63f). Perbandingan dapat dilakukan.
+  metrik             lama     baru   selisih
+  hit_rate@1       0.3214   0.3214   +0.0000
+  hit_rate@3       0.5357   0.5357   +0.0000
+  hit_rate@5       0.7857   0.7857   +0.0000
+  hit_rate@8       0.8571   0.8571   +0.0000
+  mrr              0.4712   0.4712   +0.0000
+  precision@1      0.3214   0.3214   +0.0000
+  precision@3      0.2262   0.2262   +0.0000
+  precision@5      0.2071   0.2071   +0.0000
+  precision@8      0.1473   0.1473   +0.0000
+  recall@1         0.1515   0.1515   +0.0000
+  recall@3         0.2717   0.2717   +0.0000
+  recall@5         0.4741   0.4741   +0.0000
+  recall@8         0.5693   0.5693   +0.0000
+
+Hasil disimpan ke: evaluation/results/retrieval_results.json
+
+
+COMMAND: python -m scripts.evaluate_answers
+=== RAG Answer Evaluation ===
+Answer Rate             : 0.8571
+Citation Rate           : 1.0000
+False Refusal Rate      : 0.0000
+Out-of-Scope Refusal    : 0.8000
+
+--- biaya & jaringan ---
+Sumber model embedding  : cache_lokal
+Permintaan Hugging Face : 0
+Permintaan Yahoo        : 0 (cache hit: 0)
+
+--- soal in-scope bermasalah: 4 ---
+  ihsg_02        intent=None          chunk=8   keyword tidak lengkap
+      cocok [] dari ['MSCI', 'rupiah']
+  equity_03      intent=None          chunk=8   keyword tidak lengkap
+      cocok [] dari ['stripping ratio', 'Rp172']
+  dc_01          intent=None          chunk=8   keyword tidak lengkap
+      cocok ['30%', '50%'] dari ['30%', '50%', '65%']
+  dc_05          intent=None          chunk=8   keyword tidak lengkap
+      cocok ['1,80', '194%'] dari ['1,80', '1,19', '194%', '175%']
+
+Hasil disimpan ke: evaluation/results/answer_results.json
+
+
+COMMAND: python -m scripts.evaluate_answers --end-to-end
+=== RAG Answer Evaluation ===
+Answer Rate             : 0.8571
+Citation Rate           : 1.0000
+False Refusal Rate      : 0.0000
+Out-of-Scope Refusal    : 1.0000
+
+--- biaya & jaringan ---
+Sumber model embedding  : cache_lokal
+Permintaan Hugging Face : 0
+Permintaan Yahoo        : 0 (cache hit: 0)
+Panggilan LLM           : 44 (router 14, resolver 1, jawaban 29)
+Intent                  : {'RAG': 29, 'OUT_OF_SCOPE': 3, 'LIVE_PRICE': 1}
+
+--- soal in-scope bermasalah: 4 ---
+  ihsg_02        intent=RAG           chunk=8   keyword tidak lengkap
+      cocok [] dari ['MSCI', 'rupiah']
+  equity_03      intent=RAG           chunk=8   keyword tidak lengkap
+      cocok [] dari ['stripping ratio', 'Rp172']
+  dc_01          intent=RAG           chunk=8   keyword tidak lengkap
+      cocok ['30%', '50%'] dari ['30%', '50%', '65%']
+  dc_05          intent=RAG           chunk=8   keyword tidak lengkap
+      cocok ['1,80', '194%'] dari ['1,80', '1,19', '194%', '175%']
+
+Hasil disimpan ke: evaluation/results/answer_results_end_to_end.json
+
+
+COMMAND: python -m scripts.evaluate_router --llm --semantik
+================================================================
+EVALUASI ROUTER + ENTITY RESOLVER
+================================================================
+  Pertanyaan            : 25
+  Intent benar          : 25/25 (100.0%)
+  Entity benar          : 14/14 (100.0%)
+  False refusal router  : 0
+  Panggilan LLM total   : 5
+  Metode router         : {'pattern': 24, 'llm': 1}
+
+Disimpan ke: /Users/gidion/Downloads/project-intelligence-customer-assistant/rag-stock-customer-assistant/evaluation/results/router_results.json

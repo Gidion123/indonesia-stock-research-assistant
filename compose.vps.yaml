@@ -1,0 +1,93 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: rag
+      POSTGRES_DB: rag_stock_assistant
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.vps}
+
+    volumes:
+      - rag_postgres:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rag -d rag_stock_assistant"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+    restart: unless-stopped
+
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+
+  app:
+    build: .
+
+    environment:
+      DATABASE_URL: postgresql+psycopg://rag:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.vps}@db:5432/rag_stock_assistant
+
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
+      LLM_PROVIDER: deepseek
+      INCLUDE_ADDITIONAL_DOCUMENTS: "false"
+
+      # Market data.
+      # Yahoo Finance tetap provider utama.
+      # EODHD hanya digunakan sebagai fallback ketika Yahoo mengalami
+      # rate limit atau gangguan jaringan.
+      MARKET_DATA_FALLBACK: ${MARKET_DATA_FALLBACK:-eodhd}
+      EODHD_API_KEY: ${EODHD_API_KEY}
+      EODHD_BASE_URL: ${EODHD_BASE_URL:-https://eodhd.com/api}
+      MARKET_DATA_TIMEOUT_SECONDS: "${MARKET_DATA_TIMEOUT_SECONDS:-10}"
+
+    ports:
+      # Private test endpoint. Use `ssh -L` until a domain and HTTPS exist.
+      - "127.0.0.1:8501:8501"
+
+    volumes:
+      - rag_hf_cache:/home/app/.cache/huggingface
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    init: true
+    restart: unless-stopped
+
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+
+  cleanup:
+    build: .
+
+    command:
+      - "sh"
+      - "-c"
+      - "while true; do python -m scripts.cleanup_session_uploads; sleep 3600; done"
+
+    healthcheck:
+      disable: true
+
+    environment:
+      DATABASE_URL: postgresql+psycopg://rag:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.vps}@db:5432/rag_stock_assistant
+
+    depends_on:
+      db:
+        condition: service_healthy
+
+    restart: unless-stopped
+
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+
+volumes:
+  rag_postgres:
+  rag_hf_cache:

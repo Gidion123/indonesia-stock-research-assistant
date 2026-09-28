@@ -1,0 +1,1326 @@
+{
+  "config": {
+    "include_additional_documents": false,
+    "chunk_size": 500,
+    "chunk_overlap": 80,
+    "clean_remove_citation_markers": true,
+    "clean_repair_broken_words": true,
+    "clean_drop_reference_pages": true,
+    "clean_truncate_at_bibliography": true,
+    "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "embedding_device": "cpu",
+    "retriever_search_type": "similarity",
+    "retriever_k": 8,
+    "llm_provider": "deepseek",
+    "llm_model": "deepseek-flash",
+    "table_name": "stock_knowledge"
+  },
+  "k": 8,
+  "ks": [
+    1,
+    3,
+    5,
+    8
+  ],
+  "dataset_fingerprint": "d2768255a0ff",
+  "total_questions": 25,
+  "in_scope_questions": 20,
+  "scored_questions": 20,
+  "total_gold_chunks": 74,
+  "gold_audit": {
+    "total_items": 20,
+    "strict": 19,
+    "relaxed": 1,
+    "without_gold": 0,
+    "average_gold_chunks": 3.7,
+    "max_gold_chunks": 12,
+    "saturated_items": []
+  },
+  "chunk_level": {
+    "hit_rate@1": 0.4,
+    "recall@1": 0.14972222222222223,
+    "precision@1": 0.4,
+    "hit_rate@3": 0.6,
+    "recall@3": 0.2930555555555555,
+    "precision@3": 0.28333333333333327,
+    "hit_rate@5": 0.85,
+    "recall@5": 0.4930555555555555,
+    "precision@5": 0.2500000000000001,
+    "hit_rate@8": 0.9,
+    "recall@8": 0.5472222222222223,
+    "precision@8": 0.16875,
+    "mrr": 0.5371428571428571
+  },
+  "legacy_source_level": {
+    "hit_rate_at_k": 1.0,
+    "recall_at_k": 1.0,
+    "mrr": 0.95,
+    "note": "Metrik level sumber. Dengan 4 dokumen dan k=8 metrik ini hampir tidak bisa gagal; disimpan hanya untuk pembanding historis, bukan untuk dilaporkan sebagai hasil."
+  },
+  "details": [
+    {
+      "id": "ihsg_01",
+      "question": "Bagaimana kondisi IHSG pada 2026?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "aca1c70bb161",
+        "892e04401aa4",
+        "19e967f59275",
+        "ad270b864abe",
+        "618cc2936711",
+        "865bef51f954",
+        "e4d2774f14f1",
+        "30a925de87e2"
+      ],
+      "retrieved_sources": [
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf"
+      ],
+      "expected_sources": [
+        "Analisis IHSG 2026 & Saham Unggulan.pdf"
+      ],
+      "gold_chunk_ids": [
+        "618cc2936711"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 0.0,
+        "recall@1": 0.0,
+        "precision@1": 0.0,
+        "hit@3": 0.0,
+        "recall@3": 0.0,
+        "precision@3": 0.0,
+        "hit@5": 1.0,
+        "recall@5": 1.0,
+        "precision@5": 0.2,
+        "hit@8": 1.0,
+        "recall@8": 1.0,
+        "precision@8": 0.125,
+        "mrr": 0.2
+      }
+    },
+    {
+      "id": "ihsg_02",
+      "question": "Apa faktor utama yang memengaruhi IHSG pada 2026?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "aca1c70bb161",
+        "892e04401aa4",
+        "e4d2774f14f1",
+        "ad270b864abe",
+        "b47a49f1e2a9",
+        "19e967f59275",
+        "618cc2936711",
+        "30a925de87e2"
+      ],
+      "retrieved_sources": [
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf"
+      ],
+      "expected_sources": [
+        "Analisis IHSG 2026 & Saham Unggulan.pdf"
+      ],
+      "gold_chunk_ids": [
+        "e72a2a356c9c",
+        "ef73a1de1dec"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 0.0,
+        "recall@1": 0.0,
+        "precision@1": 0.0,
+        "hit@3": 0.0,
+        "recall@3": 0.0,
+        "precision@3": 0.0,
+        "hit@5": 0.0,
+        "recall@5": 0.0,
+        "precision@5": 0.0,
+        "hit@8": 0.0,
+        "recall@8": 0.0,
+        "precision@8": 0.0,
+        "mrr": 0.0
+      }
+    },
+    {
+      "id": "ihsg_03",
+      "question": "Mengapa BBRI dianggap sebagai saham unggulan untuk pemulihan IHSG?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "d01b1264e80f",
+        "7d249030b3c8",
+        "7ab337f193b7",
+        "f314a9802667",
+        "52bfc0da4f5e",
+        "6b2e45c07047",
+        "f3242ccb389f",
+        "b7c47510f814"
+      ],
+      "retrieved_sources": [
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf"
+      ],
+      "expected_sources": [
+        "Analisis IHSG 2026 & Saham Unggulan.pdf"
+      ],
+      "gold_chunk_ids": [
+        "167635a4ed0b",
+        "30a925de87e2",
+        "7d249030b3c8",
+        "d01b1264e80f"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 1.0,
+        "recall@1": 0.25,
+        "precision@1": 1.0,
+        "hit@3": 1.0,
+        "recall@3": 0.5,
+        "precision@3": 0.6666666666666666,
+        "hit@5": 1.0,
+        "recall@5": 0.5,
+        "precision@5": 0.4,
+        "hit@8": 1.0,
+        "recall@8": 0.5,
+        "precision@8": 0.25,
+        "mrr": 1.0
+      }
+    },
+    {
+      "id": "ihsg_04",
+      "question": "Apa risiko utama yang dapat menekan IHSG pada 2026?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "aca1c70bb161",
+        "892e04401aa4",
+        "fb7256f68cdb",
+        "865bef51f954",
+        "c803ecb8da81",
+        "ad270b864abe",
+        "15a31a3b302b",
+        "30a925de87e2"
+      ],
+      "retrieved_sources": [
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf"
+      ],
+      "expected_sources": [
+        "Analisis IHSG 2026 & Saham Unggulan.pdf"
+      ],
+      "gold_chunk_ids": [
+        "865bef51f954",
+        "d01b1264e80f"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 0.0,
+        "recall@1": 0.0,
+        "precision@1": 0.0,
+        "hit@3": 0.0,
+        "recall@3": 0.0,
+        "precision@3": 0.0,
+        "hit@5": 1.0,
+        "recall@5": 0.5,
+        "precision@5": 0.2,
+        "hit@8": 1.0,
+        "recall@8": 0.5,
+        "precision@8": 0.125,
+        "mrr": 0.25
+      }
+    },
+    {
+      "id": "ihsg_05",
+      "question": "Bagaimana skenario bearish IHSG jika terjadi eskalasi geopolitik dan pelemahan rupiah?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "47692e163e71",
+        "fb7256f68cdb",
+        "0727fe71f65b",
+        "ef73a1de1dec",
+        "01fcd56b548e",
+        "e703bcc88c8a",
+        "917d4f131201",
+        "aba82fcc7de2"
+      ],
+      "retrieved_sources": [
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf"
+      ],
+      "expected_sources": [
+        "Analisis IHSG 2026 & Saham Unggulan.pdf"
+      ],
+      "gold_chunk_ids": [
+        "917d4f131201"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 0.0,
+        "recall@1": 0.0,
+        "precision@1": 0.0,
+        "hit@3": 0.0,
+        "recall@3": 0.0,
+        "precision@3": 0.0,
+        "hit@5": 0.0,
+        "recall@5": 0.0,
+        "precision@5": 0.0,
+        "hit@8": 1.0,
+        "recall@8": 1.0,
+        "precision@8": 0.125,
+        "mrr": 0.14285714285714285
+      }
+    },
+    {
+      "id": "barito_01",
+      "question": "Mengapa harga saham Barito Group relatif resilient?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "2cfb57f40f81",
+        "34b47a0abba4",
+        "b92ebb8c4434",
+        "84747ddfdb29",
+        "7f1a3a1e5888",
+        "70d4dee1d07b",
+        "acc56f34f0cc",
+        "d53a24e08b14"
+      ],
+      "retrieved_sources": [
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf"
+      ],
+      "expected_sources": [
+        "Analisis Mendalam Saham Barito Group.pdf"
+      ],
+      "gold_chunk_ids": [
+        "2cfb57f40f81",
+        "34b47a0abba4"
+      ],
+      "gold_mode": "relaxed",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 1.0,
+        "recall@1": 0.5,
+        "precision@1": 1.0,
+        "hit@3": 1.0,
+        "recall@3": 1.0,
+        "precision@3": 0.6666666666666666,
+        "hit@5": 1.0,
+        "recall@5": 1.0,
+        "precision@5": 0.4,
+        "hit@8": 1.0,
+        "recall@8": 1.0,
+        "precision@8": 0.25,
+        "mrr": 1.0
+      }
+    },
+    {
+      "id": "barito_02",
+      "question": "Bagaimana konsentrasi transaksi pada saham Barito Group?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "2cfb57f40f81",
+        "34b47a0abba4",
+        "c836abf7d5ee",
+        "d53a24e08b14",
+        "b92ebb8c4434",
+        "8a1609d8f01d",
+        "01800dcb3463",
+        "0c228572b6ca"
+      ],
+      "retrieved_sources": [
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf"
+      ],
+      "expected_sources": [
+        "Analisis Mendalam Saham Barito Group.pdf"
+      ],
+      "gold_chunk_ids": [
+        "01800dcb3463",
+        "0e7cb1c4c876",
+        "13b9cde2bce3",
+        "208df13d7cae",
+        "6476629aa7b3",
+        "83b8054c8330",
+        "9fb9b782e649",
+        "a530ac063588",
+        "b92ebb8c4434",
+        "c8164039275a",
+        "ca3bb93c8756",
+        "f0e5feaf2631"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 0.0,
+        "recall@1": 0.0,
+        "precision@1": 0.0,
+        "hit@3": 0.0,
+        "recall@3": 0.0,
+        "precision@3": 0.0,
+        "hit@5": 1.0,
+        "recall@5": 0.08333333333333333,
+        "precision@5": 0.2,
+        "hit@8": 1.0,
+        "recall@8": 0.16666666666666666,
+        "precision@8": 0.25,
+        "mrr": 0.2
+      }
+    },
+    {
+      "id": "barito_03",
+      "question": "Bagaimana pengaruh aktivitas dana global terhadap saham Barito Group?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "2cfb57f40f81",
+        "b92ebb8c4434",
+        "34b47a0abba4",
+        "8a1609d8f01d",
+        "7ab337f193b7",
+        "fd95cfb99ac3",
+        "ab32b93141ed",
+        "79dc5f625f72"
+      ],
+      "retrieved_sources": [
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf"
+      ],
+      "expected_sources": [
+        "Analisis Mendalam Saham Barito Group.pdf"
+      ],
+      "gold_chunk_ids": [
+        "2cfb57f40f81",
+        "381f0f01f5f9",
+        "b92ebb8c4434",
+        "d17901225bc0",
+        "d348c71ec5be"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 1.0,
+        "recall@1": 0.2,
+        "precision@1": 1.0,
+        "hit@3": 1.0,
+        "recall@3": 0.4,
+        "precision@3": 0.6666666666666666,
+        "hit@5": 1.0,
+        "recall@5": 0.4,
+        "precision@5": 0.4,
+        "hit@8": 1.0,
+        "recall@8": 0.4,
+        "precision@8": 0.25,
+        "mrr": 1.0
+      }
+    },
+    {
+      "id": "barito_04",
+      "question": "Apa risiko yang ditimbulkan oleh leverage keuangan Barito Group?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "2cfb57f40f81",
+        "96b270cdf06e",
+        "b92ebb8c4434",
+        "c96bdae84b2e",
+        "4d7c952a624f",
+        "fab6db5b741d",
+        "e52bc53223d7",
+        "70d4dee1d07b"
+      ],
+      "retrieved_sources": [
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf"
+      ],
+      "expected_sources": [
+        "Analisis Mendalam Saham Barito Group.pdf"
+      ],
+      "gold_chunk_ids": [
+        "4d7c952a624f",
+        "96b270cdf06e",
+        "b92ebb8c4434"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 0.0,
+        "recall@1": 0.0,
+        "precision@1": 0.0,
+        "hit@3": 1.0,
+        "recall@3": 0.6666666666666666,
+        "precision@3": 0.6666666666666666,
+        "hit@5": 1.0,
+        "recall@5": 1.0,
+        "precision@5": 0.6,
+        "hit@8": 1.0,
+        "recall@8": 1.0,
+        "precision@8": 0.375,
+        "mrr": 0.5
+      }
+    },
+    {
+      "id": "barito_05",
+      "question": "Apa strategi trading yang disarankan untuk BREN berdasarkan analisis Barito Group?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "381f0f01f5f9",
+        "34b47a0abba4",
+        "602d56487bc6",
+        "7938fd74d594",
+        "d01b1264e80f",
+        "e52bc53223d7",
+        "3a979367b7b0",
+        "a530ac063588"
+      ],
+      "retrieved_sources": [
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf"
+      ],
+      "expected_sources": [
+        "Analisis Mendalam Saham Barito Group.pdf"
+      ],
+      "gold_chunk_ids": [
+        "381f0f01f5f9",
+        "acb24d10b7e4"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 1.0,
+        "recall@1": 0.5,
+        "precision@1": 1.0,
+        "hit@3": 1.0,
+        "recall@3": 0.5,
+        "precision@3": 0.3333333333333333,
+        "hit@5": 1.0,
+        "recall@5": 0.5,
+        "precision@5": 0.2,
+        "hit@8": 1.0,
+        "recall@8": 0.5,
+        "precision@8": 0.125,
+        "mrr": 1.0
+      }
+    },
+    {
+      "id": "blueprint_01",
+      "question": "Apa alasan MP Materials dianggap sebagai aset strategis dalam skenario Greenland?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "7930df7b2459",
+        "ee537eeb2b4f",
+        "6a99581d2502",
+        "93841b32bc38",
+        "2a64f3762abd",
+        "71d92d692d6c",
+        "7ec1094b8eee",
+        "35a8185223d3"
+      ],
+      "retrieved_sources": [
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf"
+      ],
+      "expected_sources": [
+        "Blueprint Investasi Presisi Chaos Scenario.pdf"
+      ],
+      "gold_chunk_ids": [
+        "79575cfa89cb",
+        "93841b32bc38"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 0.0,
+        "recall@1": 0.0,
+        "precision@1": 0.0,
+        "hit@3": 0.0,
+        "recall@3": 0.0,
+        "precision@3": 0.0,
+        "hit@5": 1.0,
+        "recall@5": 0.5,
+        "precision@5": 0.2,
+        "hit@8": 1.0,
+        "recall@8": 0.5,
+        "precision@8": 0.125,
+        "mrr": 0.25
+      }
+    },
+    {
+      "id": "blueprint_02",
+      "question": "Bagaimana perbedaan risiko dan potensi rebound antara ANTM dan MP Materials?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "79575cfa89cb",
+        "2624100eca61",
+        "22ab040b241c",
+        "fb7256f68cdb",
+        "32496063e8e8",
+        "a34a3eb565f0",
+        "3beb9ec45774",
+        "1ca712a7f76c"
+      ],
+      "retrieved_sources": [
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf"
+      ],
+      "expected_sources": [
+        "Blueprint Investasi Presisi Chaos Scenario.pdf"
+      ],
+      "gold_chunk_ids": [
+        "32496063e8e8"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 0.0,
+        "recall@1": 0.0,
+        "precision@1": 0.0,
+        "hit@3": 0.0,
+        "recall@3": 0.0,
+        "precision@3": 0.0,
+        "hit@5": 1.0,
+        "recall@5": 1.0,
+        "precision@5": 0.2,
+        "hit@8": 1.0,
+        "recall@8": 1.0,
+        "precision@8": 0.125,
+        "mrr": 0.2
+      }
+    },
+    {
+      "id": "blueprint_03",
+      "question": "Mengapa ANTM diposisikan sebagai aset defensif atau hedge dalam Blueprint?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "79575cfa89cb",
+        "5e5f8d4cad5d",
+        "e56a20f14df5",
+        "1ca712a7f76c",
+        "a793209474d8",
+        "c2c951ac7ec5",
+        "15b7cbf6c9b9",
+        "c96bdae84b2e"
+      ],
+      "retrieved_sources": [
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf"
+      ],
+      "expected_sources": [
+        "Blueprint Investasi Presisi Chaos Scenario.pdf"
+      ],
+      "gold_chunk_ids": [
+        "35a8185223d3",
+        "a793209474d8",
+        "e56a20f14df5"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 0.0,
+        "recall@1": 0.0,
+        "precision@1": 0.0,
+        "hit@3": 1.0,
+        "recall@3": 0.3333333333333333,
+        "precision@3": 0.3333333333333333,
+        "hit@5": 1.0,
+        "recall@5": 0.6666666666666666,
+        "precision@5": 0.4,
+        "hit@8": 1.0,
+        "recall@8": 0.6666666666666666,
+        "precision@8": 0.25,
+        "mrr": 0.3333333333333333
+      }
+    },
+    {
+      "id": "blueprint_04",
+      "question": "Bagaimana pembagian alokasi portofolio 40% MP Materials, 40% ANTM, dan 20% cash dijelaskan dalam Blueprint?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "ba3adc66e8b5",
+        "e56a20f14df5",
+        "72b3304ef1f7",
+        "9f6d5a6b9d3e",
+        "ac0d2f390bcd",
+        "51f9f11cc5e5",
+        "d01b1264e80f",
+        "456211c5e8cf"
+      ],
+      "retrieved_sources": [
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Indonesian Equity Trading Research.pdf"
+      ],
+      "expected_sources": [
+        "Blueprint Investasi Presisi Chaos Scenario.pdf"
+      ],
+      "gold_chunk_ids": [
+        "ba3adc66e8b5",
+        "c2c951ac7ec5",
+        "e56a20f14df5"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 1.0,
+        "recall@1": 0.3333333333333333,
+        "precision@1": 1.0,
+        "hit@3": 1.0,
+        "recall@3": 0.6666666666666666,
+        "precision@3": 0.6666666666666666,
+        "hit@5": 1.0,
+        "recall@5": 0.6666666666666666,
+        "precision@5": 0.4,
+        "hit@8": 1.0,
+        "recall@8": 0.6666666666666666,
+        "precision@8": 0.25,
+        "mrr": 1.0
+      }
+    },
+    {
+      "id": "blueprint_05",
+      "question": "Bagaimana konsep Shadow Hands atau smart money dijelaskan dalam skenario investasi 2026?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "5e5f8d4cad5d",
+        "aefc09ac6b18",
+        "ad270b864abe",
+        "96b270cdf06e",
+        "15a31a3b302b",
+        "66c9d277e9ec",
+        "c2c951ac7ec5",
+        "fd95cfb99ac3"
+      ],
+      "retrieved_sources": [
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf"
+      ],
+      "expected_sources": [
+        "Blueprint Investasi Presisi Chaos Scenario.pdf"
+      ],
+      "gold_chunk_ids": [
+        "5e5f8d4cad5d"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 1.0,
+        "recall@1": 1.0,
+        "precision@1": 1.0,
+        "hit@3": 1.0,
+        "recall@3": 1.0,
+        "precision@3": 0.3333333333333333,
+        "hit@5": 1.0,
+        "recall@5": 1.0,
+        "precision@5": 0.2,
+        "hit@8": 1.0,
+        "recall@8": 1.0,
+        "precision@8": 0.125,
+        "mrr": 1.0
+      }
+    },
+    {
+      "id": "equity_01",
+      "question": "Berapa harga rata-rata entry dan target TP1 BBRI menurut riset?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "a0f46844be03",
+        "97f0fa7d93dd",
+        "0f8b8d04b3d3",
+        "6b2e45c07047",
+        "09d2c9a720c7",
+        "c373c3c13b96",
+        "0d965610473c",
+        "8c03144b6a19"
+      ],
+      "retrieved_sources": [
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf"
+      ],
+      "expected_sources": [
+        "Indonesian Equity Trading Research.pdf"
+      ],
+      "gold_chunk_ids": [
+        "09d2c9a720c7",
+        "0f8b8d04b3d3",
+        "9a3961100634",
+        "caab13b3476a"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 0.5
+      },
+      "chunk_level": {
+        "hit@1": 0.0,
+        "recall@1": 0.0,
+        "precision@1": 0.0,
+        "hit@3": 1.0,
+        "recall@3": 0.25,
+        "precision@3": 0.3333333333333333,
+        "hit@5": 1.0,
+        "recall@5": 0.5,
+        "precision@5": 0.4,
+        "hit@8": 1.0,
+        "recall@8": 0.5,
+        "precision@8": 0.25,
+        "mrr": 0.3333333333333333
+      }
+    },
+    {
+      "id": "equity_02",
+      "question": "Apa faktor fundamental utama yang mendukung BBRI?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "f3242ccb389f",
+        "6b2e45c07047",
+        "389fbf6ce23a",
+        "87c1e2db4493",
+        "7938fd74d594",
+        "c96bdae84b2e",
+        "8bb8bcdf1ef5",
+        "d01b1264e80f"
+      ],
+      "retrieved_sources": [
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf"
+      ],
+      "expected_sources": [
+        "Indonesian Equity Trading Research.pdf"
+      ],
+      "gold_chunk_ids": [
+        "069ff98fa96b",
+        "34ef0fcf0f66",
+        "5a99d9f3b14c",
+        "5b1ac7e3dd97",
+        "97f0fa7d93dd",
+        "bfee109d66ce",
+        "cfa15fb09529",
+        "e1af634ee1f3",
+        "e9af548585bc",
+        "f3242ccb389f"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 1.0,
+        "recall@1": 0.1,
+        "precision@1": 1.0,
+        "hit@3": 1.0,
+        "recall@3": 0.1,
+        "precision@3": 0.3333333333333333,
+        "hit@5": 1.0,
+        "recall@5": 0.1,
+        "precision@5": 0.2,
+        "hit@8": 1.0,
+        "recall@8": 0.1,
+        "precision@8": 0.125,
+        "mrr": 1.0
+      }
+    },
+    {
+      "id": "equity_03",
+      "question": "Bagaimana kondisi dan risiko saham BUMI?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "d01b1264e80f",
+        "84747ddfdb29",
+        "a9983b76f681",
+        "96b270cdf06e",
+        "c96bdae84b2e",
+        "381f0f01f5f9",
+        "a7beb248dc2b",
+        "15b7cbf6c9b9"
+      ],
+      "retrieved_sources": [
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf"
+      ],
+      "expected_sources": [
+        "Indonesian Equity Trading Research.pdf"
+      ],
+      "gold_chunk_ids": [
+        "03b2bc1f0847",
+        "042ff8eda32c",
+        "52d6dfc384a8",
+        "a402b237110b"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 0.5
+      },
+      "chunk_level": {
+        "hit@1": 0.0,
+        "recall@1": 0.0,
+        "precision@1": 0.0,
+        "hit@3": 0.0,
+        "recall@3": 0.0,
+        "precision@3": 0.0,
+        "hit@5": 0.0,
+        "recall@5": 0.0,
+        "precision@5": 0.0,
+        "hit@8": 0.0,
+        "recall@8": 0.0,
+        "precision@8": 0.0,
+        "mrr": 0.0
+      }
+    },
+    {
+      "id": "equity_04",
+      "question": "Berapa harga rata-rata entry BUMI dan berapa target harga konsensus analis?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "51f9f11cc5e5",
+        "8c03144b6a19",
+        "97f0fa7d93dd",
+        "865bef51f954",
+        "0f8b8d04b3d3",
+        "ac0d2f390bcd",
+        "e79384fb42a7",
+        "cfa15fb09529"
+      ],
+      "retrieved_sources": [
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf"
+      ],
+      "expected_sources": [
+        "Indonesian Equity Trading Research.pdf"
+      ],
+      "gold_chunk_ids": [
+        "32b0c035a339",
+        "97f0fa7d93dd",
+        "9a3961100634"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 0.0,
+        "recall@1": 0.0,
+        "precision@1": 0.0,
+        "hit@3": 1.0,
+        "recall@3": 0.3333333333333333,
+        "precision@3": 0.3333333333333333,
+        "hit@5": 1.0,
+        "recall@5": 0.3333333333333333,
+        "precision@5": 0.2,
+        "hit@8": 1.0,
+        "recall@8": 0.3333333333333333,
+        "precision@8": 0.125,
+        "mrr": 0.3333333333333333
+      }
+    },
+    {
+      "id": "equity_05",
+      "question": "Bagaimana strategi atau parameter trading BBRI yang dibahas dalam Indonesian Equity Trading Research?",
+      "type": "in_scope",
+      "retrieved_chunk_ids": [
+        "c3acdff9b8c1",
+        "d01b1264e80f",
+        "c96bdae84b2e",
+        "618cc2936711",
+        "f41716c8b263",
+        "70d4dee1d07b",
+        "7d249030b3c8",
+        "47867da91f99"
+      ],
+      "retrieved_sources": [
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Indonesian Equity Trading Research.pdf"
+      ],
+      "expected_sources": [
+        "Indonesian Equity Trading Research.pdf"
+      ],
+      "gold_chunk_ids": [
+        "07058bca65d3",
+        "14e06db2a05e",
+        "4aae679a271a",
+        "656fe844b436",
+        "af60ead67baf",
+        "b7c47510f814",
+        "c3acdff9b8c1",
+        "caab13b3476a",
+        "e9fc8ecd7cd5"
+      ],
+      "gold_mode": "strict",
+      "source_level": {
+        "hit": 1.0,
+        "recall": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      "chunk_level": {
+        "hit@1": 1.0,
+        "recall@1": 0.1111111111111111,
+        "precision@1": 1.0,
+        "hit@3": 1.0,
+        "recall@3": 0.1111111111111111,
+        "precision@3": 0.3333333333333333,
+        "hit@5": 1.0,
+        "recall@5": 0.1111111111111111,
+        "precision@5": 0.2,
+        "hit@8": 1.0,
+        "recall@8": 0.1111111111111111,
+        "precision@8": 0.125,
+        "mrr": 1.0
+      }
+    },
+    {
+      "id": "oos_01",
+      "question": "Siapa presiden Indonesia tahun 2035?",
+      "type": "out_of_scope",
+      "retrieved_chunk_ids": [
+        "6021f961b8d2",
+        "b47a49f1e2a9",
+        "892e04401aa4",
+        "92edd0bccb1b",
+        "30a925de87e2",
+        "c84218fdc454",
+        "618cc2936711",
+        "111548761d51"
+      ],
+      "retrieved_sources": [
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Indonesian Equity Trading Research.pdf"
+      ],
+      "expected_sources": [],
+      "gold_chunk_ids": [],
+      "gold_mode": "none",
+      "source_level": {
+        "hit": 0.0,
+        "recall": 0.0,
+        "reciprocal_rank": 0.0
+      },
+      "chunk_level": null
+    },
+    {
+      "id": "oos_02",
+      "question": "Bagaimana cara memasak nasi goreng?",
+      "type": "out_of_scope",
+      "retrieved_chunk_ids": [
+        "e833a91c5111",
+        "e8bd8637c3b0",
+        "af60ead67baf",
+        "8d94c48f37b8",
+        "d11703f43c9c",
+        "47867da91f99",
+        "415906572f4f",
+        "e4c255072dbd"
+      ],
+      "retrieved_sources": [
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf"
+      ],
+      "expected_sources": [],
+      "gold_chunk_ids": [],
+      "gold_mode": "none",
+      "source_level": {
+        "hit": 0.0,
+        "recall": 0.0,
+        "reciprocal_rank": 0.0
+      },
+      "chunk_level": null
+    },
+    {
+      "id": "oos_03",
+      "question": "Berapa harga emas dunia hari ini?",
+      "type": "out_of_scope",
+      "retrieved_chunk_ids": [
+        "a793209474d8",
+        "84367d8ec0ba",
+        "e6a5cf12fe15",
+        "2d88085fa383",
+        "a402b237110b",
+        "f85f5b290be4",
+        "caab13b3476a",
+        "8e2a8900806b"
+      ],
+      "retrieved_sources": [
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf"
+      ],
+      "expected_sources": [],
+      "gold_chunk_ids": [],
+      "gold_mode": "none",
+      "source_level": {
+        "hit": 0.0,
+        "recall": 0.0,
+        "reciprocal_rank": 0.0
+      },
+      "chunk_level": null
+    },
+    {
+      "id": "oos_04",
+      "question": "Bagaimana cara memperbaiki AC yang rusak?",
+      "type": "out_of_scope",
+      "retrieved_chunk_ids": [
+        "31980b9ad57c",
+        "c9b41e7225cb",
+        "d991a6c58c1b",
+        "ed1a91ab6288",
+        "5b1ac7e3dd97",
+        "cfa15fb09529",
+        "01e35c9e4fdc",
+        "456211c5e8cf"
+      ],
+      "retrieved_sources": [
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis Mendalam Saham Barito Group.pdf",
+        "Indonesian Equity Trading Research.pdf"
+      ],
+      "expected_sources": [],
+      "gold_chunk_ids": [],
+      "gold_mode": "none",
+      "source_level": {
+        "hit": 0.0,
+        "recall": 0.0,
+        "reciprocal_rank": 0.0
+      },
+      "chunk_level": null
+    },
+    {
+      "id": "oos_05",
+      "question": "Apa rekomendasi laptop terbaik untuk mahasiswa tahun ini?",
+      "type": "out_of_scope",
+      "retrieved_chunk_ids": [
+        "ed1a91ab6288",
+        "17d399b1c01d",
+        "8bb8bcdf1ef5",
+        "19e967f59275",
+        "31980b9ad57c",
+        "9f6d5a6b9d3e",
+        "a7beb248dc2b",
+        "b289054a9e77"
+      ],
+      "retrieved_sources": [
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Analisis IHSG 2026 & Saham Unggulan.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Indonesian Equity Trading Research.pdf",
+        "Blueprint Investasi Presisi Chaos Scenario.pdf"
+      ],
+      "expected_sources": [],
+      "gold_chunk_ids": [],
+      "gold_mode": "none",
+      "source_level": {
+        "hit": 0.0,
+        "recall": 0.0,
+        "reciprocal_rank": 0.0
+      },
+      "chunk_level": null
+    }
+  ]
+}

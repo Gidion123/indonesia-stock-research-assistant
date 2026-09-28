@@ -1,0 +1,208 @@
+{
+  "version": 1,
+  "description": "Dataset evaluasi router + entity resolver. Setiap baris berlabel intent yang benar dan, kalau ada, ticker yang seharusnya dikenali. Tanpa dataset ini, akurasi router hanya asumsi.",
+  "catatan": "expected_ticker null berarti pertanyaan itu memang tidak menunjuk saham tertentu. expected_resolution menyatakan hasil resolver yang benar, bukan sekadar ticker.",
+  "items": [
+    {
+      "id": "rag_01",
+      "question": "Berapa target harga BBRI menurut riset?",
+      "expected_intent": "RAG",
+      "expected_ticker": null,
+      "catatan": "Butuh dokumen, tidak butuh harga terkini."
+    },
+    {
+      "id": "rag_02",
+      "question": "Apa katalis utama saham BUMI?",
+      "expected_intent": "RAG",
+      "expected_ticker": null
+    },
+    {
+      "id": "rag_03",
+      "question": "Kenapa BREN direkomendasikan dalam analisis?",
+      "expected_intent": "RAG",
+      "expected_ticker": null
+    },
+    {
+      "id": "rag_04",
+      "question": "Apa risiko terbesar di sektor perbankan menurut laporan?",
+      "expected_intent": "RAG",
+      "expected_ticker": null
+    },
+    {
+      "id": "rag_05",
+      "question": "Bagaimana prospek IHSG pada 2026?",
+      "expected_intent": "RAG",
+      "expected_ticker": null
+    },
+    {
+      "id": "rag_06",
+      "question": "Saham mana saja yang masuk top 3 hasil screening?",
+      "expected_intent": "RAG",
+      "expected_ticker": null
+    },
+    {
+      "id": "live_01",
+      "question": "Harga BBRI sekarang berapa?",
+      "expected_intent": "LIVE_PRICE",
+      "expected_ticker": "BBRI",
+      "expected_resolution": "resolved",
+      "expected_level": "explicit"
+    },
+    {
+      "id": "live_02",
+      "question": "harga bbri hari ini",
+      "expected_intent": "LIVE_PRICE",
+      "expected_ticker": "BBRI",
+      "expected_resolution": "resolved",
+      "expected_level": "explicit",
+      "catatan": "Huruf kecil. Pengguna nyata mengetik seperti ini."
+    },
+    {
+      "id": "live_03",
+      "question": "BMRI berapa sekarang",
+      "expected_intent": "LIVE_PRICE",
+      "expected_ticker": "BMRI",
+      "expected_resolution": "resolved",
+      "expected_level": "explicit"
+    },
+    {
+      "id": "live_04",
+      "question": "Berapa harga saham Bank Rakyat Indonesia saat ini?",
+      "expected_intent": "LIVE_PRICE",
+      "expected_ticker": "BBRI",
+      "expected_resolution": "resolved",
+      "expected_level": "semantic",
+      "catatan": "Nama tanpa kode: harus lewat PgVector + LLM. Baris ini HANYA bisa dinilai dengan resolusi semantik (--semantik); di mode pola saja ia dilewati, bukan dihitung salah.",
+      "requires_semantic": true
+    },
+    {
+      "id": "compare_01",
+      "question": "BBRI sudah mencapai target belum?",
+      "expected_intent": "LIVE_COMPARE",
+      "expected_ticker": "BBRI",
+      "expected_resolution": "resolved",
+      "expected_level": "explicit",
+      "catatan": "Tidak ada kata 'sekarang', tapi mustahil dijawab tanpa harga."
+    },
+    {
+      "id": "compare_02",
+      "question": "Harga BBRI sekarang masih di bawah TP1?",
+      "expected_intent": "LIVE_COMPARE",
+      "expected_ticker": "BBRI",
+      "expected_resolution": "resolved",
+      "expected_level": "explicit"
+    },
+    {
+      "id": "compare_03",
+      "question": "Bandingkan harga BUMI sekarang dengan target di riset",
+      "expected_intent": "LIVE_COMPARE",
+      "expected_ticker": "BUMI",
+      "expected_resolution": "resolved",
+      "expected_level": "explicit"
+    },
+    {
+      "id": "compare_04",
+      "question": "Berapa upside BREN dari harga sekarang ke target?",
+      "expected_intent": "LIVE_COMPARE",
+      "expected_ticker": "BREN",
+      "expected_resolution": "resolved",
+      "expected_level": "explicit"
+    },
+    {
+      "id": "oos_01",
+      "question": "Cuaca di Medan hari ini gimana?",
+      "expected_intent": "OUT_OF_SCOPE",
+      "expected_ticker": null
+    },
+    {
+      "id": "oos_02",
+      "question": "Siapa presiden Indonesia sekarang?",
+      "expected_intent": "OUT_OF_SCOPE",
+      "expected_ticker": null
+    },
+    {
+      "id": "oos_03",
+      "question": "Berapa harga emas dunia hari ini?",
+      "expected_intent": "LIVE_PRICE",
+      "expected_ticker": null,
+      "expected_resolution": "not_found",
+      "catatan": "Router benar menandainya butuh harga; resolver yang harus menolak karena emas bukan saham. Ini kasus yang dulu dijawab RAG dengan kutipan dokumen untuk angka yang tidak ada di dokumen."
+    },
+    {
+      "id": "ambigu_01",
+      "question": "BBRI dan BMRI mana yang lebih murah sekarang?",
+      "expected_intent": "LIVE_PRICE",
+      "expected_ticker": null,
+      "expected_resolution": "ambiguous",
+      "catatan": "Membandingkan dua saham pada harga hari ini tidak butuh dokumen riset, jadi LIVE_PRICE. Dua ticker: resolver yang harus bertanya balik, bukan memilih sendiri."
+    },
+    {
+      "id": "ambigu_02",
+      "question": "Harga saham Barito sekarang berapa?",
+      "expected_intent": "LIVE_PRICE",
+      "expected_ticker": null,
+      "expected_resolution": "ambiguous",
+      "catatan": "Grup Barito punya beberapa emiten. Menebak salah satu lebih buruk daripada bertanya. Baris ini HANYA bisa dinilai dengan resolusi semantik (--semantik); di mode pola saja ia dilewati, bukan dihitung salah.",
+      "requires_semantic": true
+    },
+    {
+      "id": "sesi_01",
+      "question": "Kalau saham itu sekarang berapa?",
+      "expected_intent": "LIVE_PRICE",
+      "expected_ticker": "BBRI",
+      "expected_resolution": "resolved",
+      "expected_level": "session",
+      "session_context": {
+        "ticker": "BBRI",
+        "market": "IDX",
+        "company": "PT Bank Rakyat Indonesia (Persero) Tbk"
+      }
+    },
+    {
+      "id": "sesi_02",
+      "question": "Berapa harga emas dunia hari ini?",
+      "expected_intent": "LIVE_PRICE",
+      "expected_ticker": null,
+      "expected_resolution": "not_found",
+      "session_context": {
+        "ticker": "BBRI",
+        "market": "IDX"
+      },
+      "catatan": "Konteks sesi tidak boleh menempel ke pertanyaan yang tidak merujuk apa pun."
+    },
+    {
+      "id": "salah_kaprah_01",
+      "question": "Apa YANG dimaksud dengan RISK di laporan itu?",
+      "expected_intent": "RAG",
+      "expected_ticker": null,
+      "catatan": "YANG dan RISK lolos regex ticker. Dulu ini dijaga registry; sekarang dijaga daftar kata umum + validasi bursa."
+    },
+    {
+      "id": "salah_kaprah_02",
+      "question": "Berapa rasio CASA bank itu menurut riset?",
+      "expected_intent": "RAG",
+      "expected_ticker": null,
+      "catatan": "CASA di sini rasio dana murah, bukan emiten. Router harus memilih RAG sehingga resolver tidak pernah dipanggil."
+    },
+    {
+      "id": "pl_01",
+      "question": "Saya beli BBRI di 4.000, sekarang untung berapa?",
+      "expected_intent": "LIVE_COMPARE",
+      "expected_ticker": "BBRI",
+      "expected_resolution": "resolved",
+      "expected_level": "explicit",
+      "catatan": "Untung/rugi butuh harga terkini. Perhitungannya deterministik di Python; LLM hanya menjelaskan."
+    },
+    {
+      "id": "prioritas_01",
+      "question": "Bagaimana prospek BMRI?",
+      "expected_intent": "RAG",
+      "expected_ticker": null,
+      "session_context": {
+        "ticker": "BBRI",
+        "market": "IDX"
+      },
+      "catatan": "Ticker eksplisit harus mengalahkan konteks sesi: jawabannya soal BMRI, bukan BBRI."
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+git diff --stat (entire working tree; INCLUDES changes already present before this pass; excludes untracked files)
+
+ .gitignore                                        |   7 +-
+ .streamlit/config.toml                            |   1 +
+ README.md                                         | 369 +++++++++---
+ app.py                                            |  63 +-
+ evaluation/dataset/eval_questions.json            | 110 ++++
+ evaluation/dataset/gold_chunks.json               |  94 ++-
+ evaluation/results/answer_results.json            | 466 ++++++++++++---
+ evaluation/results/answer_results_end_to_end.json | 488 +++++++++++++---
+ evaluation/results/retrieval_results.json         | 678 +++++++++++++++++-----
+ scripts/evaluate_answers.py                       |  26 +-
+ scripts/ingest_knowledge_base.py                  |  12 +-
+ src/assistant.py                                  |  11 +-
+ src/config.py                                     |  47 +-
+ src/entity_resolver.py                            |  98 +++-
+ src/ingestion.py                                  |  57 +-
+ src/market_data.py                                | 373 +++++++++++-
+ src/memory.py                                     |  26 +-
+ src/preprocessing.py                              |  46 +-
+ src/retriever.py                                  |  68 ++-
+ src/vector_store.py                               |  39 ++
+ tests/test_answer_evaluation.py                   |  40 ++
+ tests/test_app.py                                 |   2 +-
+ tests/test_assistant.py                           |  32 +-
+ tests/test_embedding_loading.py                   |   4 +-
+ tests/test_entity_resolver.py                     |  67 +++
+ tests/test_evaluation.py                          |   4 +-
+ tests/test_ingestion.py                           |   5 +-
+ tests/test_market_data.py                         | 431 ++++++++++++--
+ tests/test_memory.py                              |  21 +
+ tests/test_preprocessing.py                       |  16 +-
+ tests/test_upload_folder.py                       |  47 +-
+ 31 files changed, 3097 insertions(+), 651 deletions(-)
+
+Pass-only changes compared with the saved start-of-pass snapshot (includes new files; excludes this reporting artifact):
+
+README.md | +68 -20
+src/preprocessing.py | +4 -0
+scripts/evaluate_answers.py | +18 -6
+tests/test_preprocessing.py | +9 -0
+tests/test_evaluation.py | +2 -2
+tests/test_answer_evaluation.py | +40 -0
+evaluation/dataset/eval_questions.json | +110 -0
+evaluation/dataset/gold_chunks.json | +89 -0
+evaluation/results/retrieval_results.json | +441 -22
+evaluation/results/answer_results.json | +328 -52
+evaluation/results/answer_results_end_to_end.json | +378 -54
+scripts/compare_retrieval.py | +87 (new)
+docs/EVALUATION_AUDIT_2026-09-27.md | +227 (new)
+evaluation/baselines/README.md | +25 (new)
+evaluation/baselines/current_legacy_25/answer_results.json | +837 (new)
+evaluation/baselines/current_legacy_25/answer_results_end_to_end.json | +960 (new)
+evaluation/baselines/current_legacy_25/eval_questions.json | +283 (new)
+evaluation/baselines/current_legacy_25/gold_chunks.json | +256 (new)
+evaluation/baselines/current_legacy_25/manifest.json | +12 (new)
+evaluation/baselines/current_legacy_25/retrieval_results.json | +1321 (new)
+evaluation/baselines/current_legacy_25/router_results.json | +371 (new)
+evaluation/baselines/full_corpus_33/eval_questions.json | +393 (new)
+evaluation/baselines/full_corpus_33/gold_chunks.json | +345 (new)
+evaluation/baselines/full_corpus_33/manifest.json | +12 (new)
+evaluation/baselines/full_corpus_33/retrieval_results.json | +1740 (new)
+evaluation/baselines/historical_4pdf/answer_results.json | +837 (new)
+evaluation/baselines/historical_4pdf/answer_results_end_to_end.json | +960 (new)
+evaluation/baselines/historical_4pdf/eval_questions.json | +283 (new)
+evaluation/baselines/historical_4pdf/gold_chunks.json | +261 (new)
+evaluation/baselines/historical_4pdf/manifest.json | +6 (new)
+evaluation/baselines/historical_4pdf/retrieval_results.json | +1326 (new)
+evaluation/baselines/historical_4pdf/router_results.json | +371 (new)
+evaluation/results/retrieval_diagnosis.json | +360 (new)
+evaluation/results/retrieval_experiment.json | +5233 (new)
+evaluation/results/validation_2026-09-27.json | +34 (new)
+evaluation/results/validation_2026-09-27.txt | +165 (new)
+
+36 files, +18192 -156

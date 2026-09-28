@@ -1,0 +1,34 @@
+{
+  "date": "2026-09-27",
+  "dataset_fingerprint": "eeae64b5f63f",
+  "question_dataset_sha256": "6e15da6066a034adbad7434cdc11a4e2158709a1a3b14ebc8c1bbdffa87be39c",
+  "pytest": {
+    "passed": 383,
+    "skipped": 4,
+    "seconds": 57.91,
+    "skip_reasons": [
+      "3 opt-in live market tests",
+      "1 optional BIPI/additional-corpus test"
+    ]
+  },
+  "preprocessing": {
+    "active_chunks_identical": true,
+    "report": {
+      "pdf_files": 5,
+      "pages_total": 117,
+      "pages_kept": 105,
+      "pages_dropped_short": 0,
+      "pages_dropped_reference": 12,
+      "pages_truncated": 5,
+      "citation_markers_removed": 202,
+      "broken_words_repaired": [],
+      "chunks": 489
+    }
+  },
+  "retrieval_candidate_adopted": false,
+  "production_modified": false,
+  "evaluation_validity": {
+    "answer_results": true,
+    "answer_results_end_to_end": true
+  }
+}

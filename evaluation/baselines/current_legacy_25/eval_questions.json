@@ -1,0 +1,283 @@
+[
+  {
+    "id": "ihsg_01",
+    "question": "Bagaimana kondisi IHSG pada 2026?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Analisis IHSG 2026 & Saham Unggulan.pdf"
+    ],
+    "expected_keywords": [
+      "6.318,50",
+      "25,17"
+    ]
+  },
+  {
+    "id": "ihsg_02",
+    "question": "Apa faktor utama yang memengaruhi IHSG pada 2026?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Analisis IHSG 2026 & Saham Unggulan.pdf"
+    ],
+    "expected_keywords": [
+      "MSCI",
+      "rupiah"
+    ]
+  },
+  {
+    "id": "ihsg_03",
+    "question": "Mengapa BBRI dianggap sebagai saham unggulan untuk pemulihan IHSG?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Analisis IHSG 2026 & Saham Unggulan.pdf"
+    ],
+    "expected_keywords": [
+      "BBRI",
+      "IHSG"
+    ]
+  },
+  {
+    "id": "ihsg_04",
+    "question": "Apa risiko utama yang dapat menekan IHSG pada 2026?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Analisis IHSG 2026 & Saham Unggulan.pdf"
+    ],
+    "expected_keywords": [
+      "risiko",
+      "IHSG"
+    ]
+  },
+  {
+    "id": "ihsg_05",
+    "question": "Bagaimana skenario bearish IHSG jika terjadi eskalasi geopolitik dan pelemahan rupiah?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Analisis IHSG 2026 & Saham Unggulan.pdf"
+    ],
+    "expected_keywords": [
+      "bearish",
+      "IHSG",
+      "rupiah"
+    ]
+  },
+  {
+    "id": "barito_01",
+    "question": "Mengapa harga saham Barito Group relatif resilient?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Analisis Mendalam Saham Barito Group.pdf"
+    ],
+    "expected_keywords": [
+      "standby buyer",
+      "konsorsium"
+    ]
+  },
+  {
+    "id": "barito_02",
+    "question": "Bagaimana konsentrasi transaksi pada saham Barito Group?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Analisis Mendalam Saham Barito Group.pdf"
+    ],
+    "expected_keywords": [
+      "transaksi"
+    ]
+  },
+  {
+    "id": "barito_03",
+    "question": "Bagaimana pengaruh aktivitas dana global terhadap saham Barito Group?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Analisis Mendalam Saham Barito Group.pdf"
+    ],
+    "expected_keywords": [
+      "global",
+      "Barito"
+    ]
+  },
+  {
+    "id": "barito_04",
+    "question": "Apa risiko yang ditimbulkan oleh leverage keuangan Barito Group?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Analisis Mendalam Saham Barito Group.pdf"
+    ],
+    "expected_keywords": [
+      "leverage",
+      "risiko"
+    ]
+  },
+  {
+    "id": "barito_05",
+    "question": "Apa strategi trading yang disarankan untuk BREN berdasarkan analisis Barito Group?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Analisis Mendalam Saham Barito Group.pdf"
+    ],
+    "expected_keywords": [
+      "3.300",
+      "2.900"
+    ]
+  },
+  {
+    "id": "blueprint_01",
+    "question": "Apa alasan MP Materials dianggap sebagai aset strategis dalam skenario Greenland?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Blueprint Investasi Presisi Chaos Scenario.pdf"
+    ],
+    "expected_keywords": [
+      "MP Materials",
+      "strategis"
+    ]
+  },
+  {
+    "id": "blueprint_02",
+    "question": "Bagaimana perbedaan risiko dan potensi rebound antara ANTM dan MP Materials?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Blueprint Investasi Presisi Chaos Scenario.pdf"
+    ],
+    "expected_keywords": [
+      "ANTM",
+      "MP Materials",
+      "rebound"
+    ]
+  },
+  {
+    "id": "blueprint_03",
+    "question": "Mengapa ANTM diposisikan sebagai aset defensif atau hedge dalam Blueprint?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Blueprint Investasi Presisi Chaos Scenario.pdf"
+    ],
+    "expected_keywords": [
+      "ANTM",
+      "defensif",
+      "hedge"
+    ]
+  },
+  {
+    "id": "blueprint_04",
+    "question": "Bagaimana pembagian alokasi portofolio 40% MP Materials, 40% ANTM, dan 20% cash dijelaskan dalam Blueprint?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Blueprint Investasi Presisi Chaos Scenario.pdf"
+    ],
+    "expected_keywords": [
+      "40%",
+      "MP Materials",
+      "ANTM"
+    ]
+  },
+  {
+    "id": "blueprint_05",
+    "question": "Bagaimana konsep Shadow Hands atau smart money dijelaskan dalam skenario investasi 2026?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Blueprint Investasi Presisi Chaos Scenario.pdf"
+    ],
+    "expected_keywords": [
+      "Shadow Hands",
+      "smart money"
+    ]
+  },
+  {
+    "id": "equity_01",
+    "question": "Berapa harga rata-rata entry dan target TP1 BBRI menurut riset?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Indonesian Equity Trading Research.pdf"
+    ],
+    "expected_keywords": [
+      "3.072",
+      "3.400"
+    ]
+  },
+  {
+    "id": "equity_02",
+    "question": "Apa faktor fundamental utama yang mendukung BBRI?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Indonesian Equity Trading Research.pdf"
+    ],
+    "expected_keywords": [
+      "BBRI",
+      "fundamental"
+    ]
+  },
+  {
+    "id": "equity_03",
+    "question": "Bagaimana kondisi dan risiko saham BUMI?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Indonesian Equity Trading Research.pdf"
+    ],
+    "expected_keywords": [
+      "stripping ratio",
+      "Rp172"
+    ],
+    "gold_keywords": [
+      "stripping ratio"
+    ]
+  },
+  {
+    "id": "equity_04",
+    "question": "Berapa harga rata-rata entry BUMI dan berapa target harga konsensus analis?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Indonesian Equity Trading Research.pdf"
+    ],
+    "expected_keywords": [
+      "186,8",
+      "Rp300"
+    ]
+  },
+  {
+    "id": "equity_05",
+    "question": "Bagaimana strategi atau parameter trading BBRI yang dibahas dalam Indonesian Equity Trading Research?",
+    "type": "in_scope",
+    "expected_sources": [
+      "Indonesian Equity Trading Research.pdf"
+    ],
+    "expected_keywords": [
+      "BBRI",
+      "trading"
+    ]
+  },
+  {
+    "id": "oos_01",
+    "question": "Siapa presiden Indonesia tahun 2035?",
+    "type": "out_of_scope",
+    "expected_sources": [],
+    "expected_keywords": []
+  },
+  {
+    "id": "oos_02",
+    "question": "Bagaimana cara memasak nasi goreng?",
+    "type": "out_of_scope",
+    "expected_sources": [],
+    "expected_keywords": []
+  },
+  {
+    "id": "oos_03",
+    "question": "Berapa harga emas dunia hari ini?",
+    "type": "out_of_scope",
+    "expected_sources": [],
+    "expected_keywords": []
+  },
+  {
+    "id": "oos_04",
+    "question": "Bagaimana cara memperbaiki AC yang rusak?",
+    "type": "out_of_scope",
+    "expected_sources": [],
+    "expected_keywords": []
+  },
+  {
+    "id": "oos_05",
+    "question": "Apa rekomendasi laptop terbaik untuk mahasiswa tahun ini?",
+    "type": "out_of_scope",
+    "expected_sources": [],
+    "expected_keywords": []
+  }
+]

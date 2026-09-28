@@ -1,0 +1,25 @@
+# Runtime dependencies for the CPU-only VPS image. Torch is installed from
+# PyTorch's CPU wheel index in Dockerfile before these packages.
+langchain-core==0.3.86
+langchain-groq==0.3.8
+langchain-huggingface==0.3.1
+langchain-text-splitters==0.3.11
+langchain-postgres==0.0.16
+langchain-openai==0.3.35
+sentence-transformers==3.4.1
+transformers==4.57.6
+huggingface-hub==0.36.2
+langsmith==0.14.0
+orjson==3.12.0
+numpy==2.2.4
+pandas==2.2.3
+scikit-learn==1.6.1
+pgvector==0.3.6
+psycopg[binary]==3.2.9
+sqlalchemy==2.0.41
+pypdf==5.4.0
+streamlit==1.44.1
+python-dotenv==1.1.0
+yfinance==1.7.0
+# Required by sentence-transformers on Python 3.11; see requirements.txt.
+scipy>=1.16.0

@@ -1,0 +1,261 @@
+{
+  "version": 1,
+  "items": {
+    "ihsg_01": {
+      "gold_chunk_ids": [
+        "618cc2936711"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "6.318,50",
+        "25,17"
+      ]
+    },
+    "ihsg_02": {
+      "gold_chunk_ids": [
+        "e72a2a356c9c",
+        "ef73a1de1dec"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "MSCI",
+        "rupiah"
+      ]
+    },
+    "ihsg_03": {
+      "gold_chunk_ids": [
+        "167635a4ed0b",
+        "30a925de87e2",
+        "7d249030b3c8",
+        "d01b1264e80f"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "BBRI",
+        "IHSG"
+      ]
+    },
+    "ihsg_04": {
+      "gold_chunk_ids": [
+        "865bef51f954",
+        "d01b1264e80f"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "risiko",
+        "IHSG"
+      ]
+    },
+    "ihsg_05": {
+      "gold_chunk_ids": [
+        "917d4f131201"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "bearish",
+        "IHSG",
+        "rupiah"
+      ]
+    },
+    "barito_01": {
+      "gold_chunk_ids": [
+        "2cfb57f40f81",
+        "34b47a0abba4"
+      ],
+      "gold_mode": "relaxed",
+      "keywords": [
+        "standby buyer",
+        "konsorsium"
+      ]
+    },
+    "barito_02": {
+      "gold_chunk_ids": [
+        "01800dcb3463",
+        "0e7cb1c4c876",
+        "13b9cde2bce3",
+        "208df13d7cae",
+        "6476629aa7b3",
+        "83b8054c8330",
+        "9fb9b782e649",
+        "a530ac063588",
+        "b92ebb8c4434",
+        "c8164039275a",
+        "ca3bb93c8756",
+        "f0e5feaf2631"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "transaksi"
+      ]
+    },
+    "barito_03": {
+      "gold_chunk_ids": [
+        "2cfb57f40f81",
+        "381f0f01f5f9",
+        "b92ebb8c4434",
+        "d17901225bc0",
+        "d348c71ec5be"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "global",
+        "Barito"
+      ]
+    },
+    "barito_04": {
+      "gold_chunk_ids": [
+        "4d7c952a624f",
+        "96b270cdf06e",
+        "b92ebb8c4434"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "leverage",
+        "risiko"
+      ]
+    },
+    "barito_05": {
+      "gold_chunk_ids": [
+        "381f0f01f5f9",
+        "acb24d10b7e4"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "3.300",
+        "2.900"
+      ]
+    },
+    "blueprint_01": {
+      "gold_chunk_ids": [
+        "79575cfa89cb",
+        "93841b32bc38"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "MP Materials",
+        "strategis"
+      ]
+    },
+    "blueprint_02": {
+      "gold_chunk_ids": [
+        "32496063e8e8"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "ANTM",
+        "MP Materials",
+        "rebound"
+      ]
+    },
+    "blueprint_03": {
+      "gold_chunk_ids": [
+        "35a8185223d3",
+        "a793209474d8",
+        "e56a20f14df5"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "ANTM",
+        "defensif",
+        "hedge"
+      ]
+    },
+    "blueprint_04": {
+      "gold_chunk_ids": [
+        "ba3adc66e8b5",
+        "c2c951ac7ec5",
+        "e56a20f14df5"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "40%",
+        "MP Materials",
+        "ANTM"
+      ]
+    },
+    "blueprint_05": {
+      "gold_chunk_ids": [
+        "5e5f8d4cad5d"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "Shadow Hands",
+        "smart money"
+      ]
+    },
+    "equity_01": {
+      "gold_chunk_ids": [
+        "09d2c9a720c7",
+        "0f8b8d04b3d3",
+        "9a3961100634",
+        "caab13b3476a"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "3.072",
+        "3.400"
+      ]
+    },
+    "equity_02": {
+      "gold_chunk_ids": [
+        "069ff98fa96b",
+        "34ef0fcf0f66",
+        "5a99d9f3b14c",
+        "5b1ac7e3dd97",
+        "97f0fa7d93dd",
+        "bfee109d66ce",
+        "cfa15fb09529",
+        "e1af634ee1f3",
+        "e9af548585bc",
+        "f3242ccb389f"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "BBRI",
+        "fundamental"
+      ]
+    },
+    "equity_03": {
+      "gold_chunk_ids": [
+        "03b2bc1f0847",
+        "042ff8eda32c",
+        "52d6dfc384a8",
+        "a402b237110b"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "stripping ratio"
+      ]
+    },
+    "equity_04": {
+      "gold_chunk_ids": [
+        "32b0c035a339",
+        "97f0fa7d93dd",
+        "9a3961100634"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "186,8",
+        "Rp300"
+      ]
+    },
+    "equity_05": {
+      "gold_chunk_ids": [
+        "07058bca65d3",
+        "14e06db2a05e",
+        "4aae679a271a",
+        "656fe844b436",
+        "af60ead67baf",
+        "b7c47510f814",
+        "c3acdff9b8c1",
+        "caab13b3476a",
+        "e9fc8ecd7cd5"
+      ],
+      "gold_mode": "strict",
+      "keywords": [
+        "BBRI",
+        "trading"
+      ]
+    }
+  }
+}

@@ -1,0 +1,19 @@
+# Only the runtime source and curated PDFs enter the build context.
+**
+!Dockerfile
+!.dockerignore
+!requirements-vps.txt
+!app.py
+!src/
+!src/**
+!scripts/
+!scripts/**
+!.streamlit/
+!.streamlit/config.toml
+!data/
+!data/knowledge_base/
+!data/knowledge_base/primary/
+!data/knowledge_base/primary/*.pdf
+**/__pycache__/
+**/*.pyc
+**/.DS_Store

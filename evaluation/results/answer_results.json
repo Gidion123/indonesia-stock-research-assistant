@@ -1,0 +1,1113 @@
+{
+  "config": {
+    "include_additional_documents": false,
+    "chunk_size": 500,
+    "chunk_overlap": 80,
+    "clean_remove_citation_markers": true,
+    "clean_repair_broken_words": true,
+    "clean_drop_reference_pages": true,
+    "clean_truncate_at_bibliography": true,
+    "embedding_model": "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
+    "embedding_device": "cpu",
+    "retriever_search_type": "similarity",
+    "retriever_k": 8,
+    "llm_provider": "deepseek",
+    "llm_model": "deepseek-flash",
+    "table_name": "stock_knowledge"
+  },
+  "total_questions": 33,
+  "failed_rows": 0,
+  "failed_ratio": 0.0,
+  "run_is_valid": true,
+  "in_scope_questions": 28,
+  "out_of_scope_questions": 5,
+  "answer_rate": 0.8571428571428571,
+  "citation_rate": 1.0,
+  "citation_accuracy": 1.0,
+  "citation_accuracy_scored": 28,
+  "false_refusal_rate": 0.0,
+  "out_of_scope_refusal_rate": 0.8,
+  "average_latency_seconds": 6.221,
+  "llm_calls": null,
+  "intents": null,
+  "details": [
+    {
+      "id": "ihsg_01",
+      "question": "Bagaimana kondisi IHSG pada 2026?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 13.1862,
+      "answer": "Pada 2026, IHSG berada dalam kondisi tekanan koreksi signifikan dan sedang menuju pembentukan *major bottom*. Setelah mencetak rekor tertinggi 9.134,70 pada 20 Januari 2026, IHSG berbalik arah drastis dan merosot 25,17% YTD ke level 6.318,50 pada penutupan 20 Mei 2026 [Analisis IHSG 2026 & Saham Unggulan.pdf hal.1]. Fase *Big Bottom* diproyeksikan matang pada akhir Mei hingga pertengahan Juni 2026 [Analisis IHSG 2026 & Saham Unggulan.pdf hal.3].\n\nSkenario A memproyeksikan rebound teknis jangka pendek ke resistance 6.400–6.450, lalu *final flush* ke gap 6.057 dengan probabilitas 65% [Analisis IHSG 2026 & Saham Unggulan.pdf hal.5]. *Final flush* ke 6.057 menjelang akhir Mei 2026 tetap terbuka, dan area tersebut disebut sebagai zona akumulasi emas [Analisis IHSG 2026 & Saham Unggulan.pdf hal.15]. Setelah titik balik utama, target bullish akhir 2026 di level 8.873–9.000 dinilai sangat realistis [Analisis IHSG 2026 & Saham Unggulan.pdf hal.1].",
+      "retrieved_chunk_ids": [
+        "aca1c70bb161",
+        "892e04401aa4",
+        "19e967f59275",
+        "ad270b864abe",
+        "618cc2936711",
+        "865bef51f954",
+        "e4d2774f14f1",
+        "30a925de87e2"
+      ],
+      "expected_keywords": [
+        "6.318,50",
+        "25,17"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "6.318,50",
+        "25,17"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "ihsg_02",
+      "question": "Apa faktor utama yang memengaruhi IHSG pada 2026?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 12.4694,
+      "answer": "Berdasarkan dokumen, faktor utama yang memengaruhi IHSG pada 2026 meliputi:\n\n1. **Makroekonomi domestik dan global**: ketahanan sektor riil Indonesia di tengah gejolak pasar keuangan global, dengan pertumbuhan ekonomi nasional kuartal I-2026 sebesar 5,61% YoY [Analisis IHSG 2026 & Saham Unggulan.pdf hal.1], serta asumsi RAPBN 2027 yang menargetkan pertumbuhan ekonomi 5,8%–6,5% [Analisis IHSG 2026 & Saham Unggulan.pdf hal.15].\n\n2. **Siklus dan teknikal**: parameter makroekonomi, siklus pergerakan harga W.D. Gann, analisis teknikal multi-timeframe, fase *major bottom*/*Big Bottom* akhir Mei hingga pertengahan Juni 2026, dan peluang *final flush* ke level 6.057 [Analisis IHSG 2026 & Saham Unggulan.pdf hal.15] [Analisis IHSG 2026 & Saham Unggulan.pdf hal.3] [Analisis IHSG 2026 & Saham Unggulan.pdf hal.5].\n\n3. **Kebijakan pemerintah dan politik**: reformasi struktural pemerintahan baru Presiden Prabowo Subianto pada kuartal kedua 2026 serta rotasi sektor [Analisis IHSG 2026 & Saham Unggulan.pdf hal.6].\n\n4. **Arus dana asing/institusi**: potensi pemodal institusi asing kembali melakukan akumulasi aset di bursa domestik [Analisis IHSG 2026 & Saham Unggulan.pdf hal.3], serta rating Indonesia di mata lembaga pemeringkat internasional pada paruh kedua 2026 yang mendorong pembalikan aliran dana asing secara masif [Analisis IHSG 2026 & Saham Unggulan.pdf hal.6].\n\n5. **Siklus waktu/astrologi keuangan**: jendela *trend reversal* 18–20 Mei 2026 dan volatilitas puncak 18 Mei 2026 [Analisis IHSG 2026 & Saham Unggulan.pdf hal.3].",
+      "retrieved_chunk_ids": [
+        "aca1c70bb161",
+        "892e04401aa4",
+        "e4d2774f14f1",
+        "ad270b864abe",
+        "b47a49f1e2a9",
+        "19e967f59275",
+        "618cc2936711",
+        "30a925de87e2"
+      ],
+      "expected_keywords": [
+        "MSCI",
+        "rupiah"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [],
+      "keyword_match": false,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "ihsg_03",
+      "question": "Mengapa BBRI dianggap sebagai saham unggulan untuk pemulihan IHSG?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 11.5002,
+      "answer": "BBRI dianggap sebagai saham unggulan untuk pemulihan IHSG karena:\n\n- BBRI dinobatkan sebagai saham terbaik dan paling siap mencatat rebound paling kencang saat IHSG berbalik arah, didukung valuasi lantai historis di level PBV, yield dividen tunai 13,75%, serta suntikan likuiditas murah dari kewajiban penempatan DHE Himbara [Analisis IHSG 2026 & Saham Unggulan.pdf hal.15].\n- Saham perbankan berkapitalisasi besar, khususnya BBRI, selalu memimpin pemulihan tercepat setelah koreksi tajam akibat faktor eksternal atau arus modal asing. Likuiditas hariannya yang tinggi memudahkan pemodal institusi besar melakukan re-entry secara masif setelah kepanikan mereda [Analisis IHSG 2026 & Saham Unggulan.pdf hal.9].\n- Harga BBRI diproyeksikan keluar dari bearish harian dan membentuk tren naik baru menuju target pertama Rp3.400, didukung perbaikan rasio dana murah CASA. Pada akhir 2026, harga ditargetkan menuju nilai wajar konsensus Rp4.250 seiring realisasi penempatan DHE SDA yang mempertebal profitabilitas [Analisis IHSG 2026 & Saham Unggulan.pdf hal.13].\n- BBRI memiliki dividend yield 10,1%–13,3%, permodalan kuat, dan pendapatan bunga bersih stabil, sehingga menarik sebagai saham utama portofolio trading hingga Desember 2026. Katalis positifnya termasuk Danantara Dividend Payout sebesar Rp52,1 triliun dengan payout ratio 92% [Indonesian Equity Trading Research.pdf hal.7].\n- Strategi eksekusinya dirancang untuk memanfaatkan momentum pemulihan harga BBRI di sekitar area major bottom IHSG 2026, dengan initial entry Rp3.000–Rp3.100, alokasi 50%, dan margin pengaman dividen 13,75% [Analisis IHSG 2026 & Saham Unggulan.pdf hal.12].",
+      "retrieved_chunk_ids": [
+        "d01b1264e80f",
+        "7d249030b3c8",
+        "7ab337f193b7",
+        "f314a9802667",
+        "52bfc0da4f5e",
+        "6b2e45c07047",
+        "f3242ccb389f",
+        "b7c47510f814"
+      ],
+      "expected_keywords": [
+        "BBRI",
+        "IHSG"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "BBRI",
+        "IHSG"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "ihsg_04",
+      "question": "Apa risiko utama yang dapat menekan IHSG pada 2026?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 12.1199,
+      "answer": "Risiko utama yang dapat menekan IHSG pada 2026 menurut dokumen adalah:\n\n- Potensi **penurunan akhir (final flush)** untuk menutup gap historis di level **6.057**, dengan probabilitas **65%** [Analisis IHSG 2026 & Saham Unggulan.pdf hal.5] [Analisis IHSG 2026 & Saham Unggulan.pdf hal.1].\n- **Volatilitas puncak bursa pada 18 Mei 2026**, saat IHSG anjlok harian hingga **3,34%**, dengan rentang **18–20 Mei 2026** sebagai jendela balik arah tren yang krusial [Analisis IHSG 2026 & Saham Unggulan.pdf hal.1] [Analisis IHSG 2026 & Saham Unggulan.pdf hal.3].",
+      "retrieved_chunk_ids": [
+        "aca1c70bb161",
+        "892e04401aa4",
+        "fb7256f68cdb",
+        "865bef51f954",
+        "1118eacbe6bd",
+        "c803ecb8da81",
+        "ad270b864abe",
+        "15a31a3b302b"
+      ],
+      "expected_keywords": [
+        "risiko",
+        "IHSG"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "risiko",
+        "IHSG"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "ihsg_05",
+      "question": "Bagaimana skenario bearish IHSG jika terjadi eskalasi geopolitik dan pelemahan rupiah?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 7.0508,
+      "answer": "Skenario bearish IHSG jika terjadi eskalasi geopolitik dan pelemahan rupiah digambarkan sebagai **Skenario C: Bearish Breakdown di Bawah Level 6.000** dengan probabilitas **10%** [Analisis IHSG 2026 & Saham Unggulan.pdf hal.5].\n\nSkenario terburuk terjadi apabila eskalasi konflik militer di Timur Tengah meluas secara ekstrem sehingga mengganggu pasokan energi global dan mendorong harga minyak mentah melonjak di atas **USD 120 per barel** [Analisis IHSG 2026 & Saham Unggulan.pdf hal.5]. Tekanan inflasi impor memaksa Bank Indonesia kembali menaikkan suku bunga acuan di atas **6,00%**, sementara rupiah terus melemah melewati level **Rp18.000 per dolar AS** [Analisis IHSG 2026 & Saham Unggulan.pdf hal.5]. Akibatnya, IHSG menembus level psikologis **6.000**, membatalkan seluruh skenario bullish, dan memperpanjang fase penurunan **bearish trend** hingga akhir tahun menuju area **5.500** [Analisis IHSG 2026 & Saham Unggulan.pdf hal.5].",
+      "retrieved_chunk_ids": [
+        "47692e163e71",
+        "fb7256f68cdb",
+        "0727fe71f65b",
+        "ef73a1de1dec",
+        "01fcd56b548e",
+        "e703bcc88c8a",
+        "917d4f131201",
+        "aba82fcc7de2"
+      ],
+      "expected_keywords": [
+        "bearish",
+        "IHSG",
+        "rupiah"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "bearish",
+        "IHSG",
+        "rupiah"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "barito_01",
+      "question": "Mengapa harga saham Barito Group relatif resilient?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 9.619,
+      "answer": "Harga saham Barito Group relatif resilient karena adanya sindikasi market maker domestik yang bertindak sebagai pembeli siaga (*standby buyer*). Hal ini terlihat dari konsentrasi yang sangat tinggi pada 5 pembeli teratas (*top 5 buyers*), yang menopang harga emiten dari kejatuhan lebih dalam dan menstabilkan harga, sehingga memaksa pelaku pasar jangka pendek melakukan pembelian kembali di harga lebih tinggi (*short squeeze*) [Analisis Mendalam Saham Barito Group.pdf hal.7]. Ketahanan tersebut juga bergantung pada keyakinan dan kapasitas modal konsorsium pembeli domestik; tanpa komitmen penyerapan domestik yang kuat, tekanan jual dari reksa dana pelacak indeks pasif dapat menekan harga [Analisis Mendalam Saham Barito Group.pdf hal.7]. Selain itu, terdapat anomali harga dari fenomena *short-squeeze* pasca-delisting indeks global yang menciptakan peluang pembalikan harga instan jika diakumulasi oleh sindikasi domestik secara agresif [Analisis Mendalam Saham Barito Group.pdf hal.9].",
+      "retrieved_chunk_ids": [
+        "2cfb57f40f81",
+        "34b47a0abba4",
+        "b92ebb8c4434",
+        "84747ddfdb29",
+        "7f1a3a1e5888",
+        "a2b4715d52be",
+        "70d4dee1d07b",
+        "acc56f34f0cc"
+      ],
+      "expected_keywords": [
+        "standby buyer",
+        "konsorsium"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "standby buyer",
+        "konsorsium"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "barito_02",
+      "question": "Bagaimana konsentrasi transaksi pada saham Barito Group?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 5.2607,
+      "answer": "Konsentrasi transaksi pada saham Barito Group terlihat sangat tinggi. Dokumen menyebutkan adanya konsentrasi yang sangat tinggi pada **5 pembeli teratas (top 5 buyers)**, yang membuktikan kehadiran **sindikasi market maker domestik** yang bertindak sebagai **pembeli siaga (standby buyer)** untuk menopang harga emiten Barito Group dari kejatuhan lebih dalam [Analisis Mendalam Saham Barito Group.pdf hal.7]. Selain itu, berdasarkan **broker summary** dalam kurun waktu **3 hingga 6 bulan terakhir**, pola pergerakan harga saham **BREN dan CUAN** dikendalikan [Analisis Mendalam Saham Barito Group.pdf hal.6].",
+      "retrieved_chunk_ids": [
+        "2cfb57f40f81",
+        "34b47a0abba4",
+        "c836abf7d5ee",
+        "d53a24e08b14",
+        "b92ebb8c4434",
+        "fc21fe6abb2b",
+        "8a1609d8f01d",
+        "a2b4715d52be"
+      ],
+      "expected_keywords": [
+        "transaksi"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "transaksi"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "barito_03",
+      "question": "Bagaimana pengaruh aktivitas dana global terhadap saham Barito Group?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 12.8436,
+      "answer": "Aktivitas dana global mempengaruhi saham Barito Group dalam beberapa fase. Saat BREN dan CUAN masih memenuhi kriteria inklusi indeks global, harga keduanya sangat sensitif terhadap aliran dana asing; pengumuman inklusi MSCI Emerging Markets akhir 2025 memicu aliran masuk modal asing masif dan menjadi penggerak utama kenaikan harga ke level puncaknya [Analisis Mendalam Saham Barito Group.pdf hal.7]. Setelah status HSC dan delisting dari indeks MSCI pada Mei 2026, peran dominan pengendali harga beralih ke pelaku pasar domestik; arus keluar bersih asing dari pasar saham Indonesia, termasuk net sell asing Rp 1,39 triliun pada awal Juni 2026 yang dipimpin pelepasan saham perbankan besar seperti BBCA, menunjukkan penarikan modal global [Analisis Mendalam Saham Barito Group.pdf hal.7]. Dalam kondisi itu, ketahanan harga saham Barito Group bergantung pada keyakinan dan kapasitas modal konsorsium pembeli domestik; tanpa komitmen penyerapan domestik yang kuat, tekanan jual mekanis dari reksa dana pelacak indeks pasif dapat menekan harga hingga di bawah nilai fundamentalnya [Analisis Mendalam Saham Barito Group.pdf hal.7]. Sebaliknya, keluarnya BREN dan CUAN dari indeks MSCI Global Standard diproyeksikan mengakhiri tekanan penjualan paksa investor asing dan membuka ruang rebound teknikal [Analisis IHSG 2026 & Saham Unggulan.pdf hal.14]. Dokumen juga menyebut pengelola dana lokal memanfaatkan kepanikan investor asing untuk menyerap saham di harga bawah lalu melakukan markup sistematis [Analisis Mendalam Saham Barito Group.pdf hal.6], serta sindikasi market maker domestik bertindak sebagai standby buyer untuk menopang harga dan memicu short squeeze [Analisis Mendalam Saham Barito Group.pdf hal.7].",
+      "retrieved_chunk_ids": [
+        "2cfb57f40f81",
+        "b92ebb8c4434",
+        "34b47a0abba4",
+        "8a1609d8f01d",
+        "7ab337f193b7",
+        "fd95cfb99ac3",
+        "ab32b93141ed",
+        "79dc5f625f72"
+      ],
+      "expected_keywords": [
+        "global",
+        "Barito"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "global",
+        "Barito"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "barito_04",
+      "question": "Apa risiko yang ditimbulkan oleh leverage keuangan Barito Group?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 3.2677,
+      "answer": "Risiko yang ditimbulkan oleh leverage keuangan Barito Group antara lain:\n\n- Potensi **margin call** pada tingkat induk usaha karena total liabilitas CUAN mencapai **USD 2,13 miliar** dan rasio **DER di atas 3,3x**, sementara nilai pasar ekuitas grup menurun drastis sejak awal tahun 2026. [Analisis Mendalam Saham Barito Group.pdf hal.9]\n- Penurunan drastis nilai jaminan saham dapat memicu **likuidasi paksa dari bank kreditur sindikasi**, yang berpotensi menimbulkan **efek domino bagi industri perbankan nasional**, terutama bank pemberi pinjaman utama seperti **Bank Mandiri, BCA, dan BNI**. [Analisis Mendalam Saham Barito Group.pdf hal.9]\n- Dalam skenario bear case, arus kas operasional yang terus negatif di tengah kewajiban pembayaran bunga pinjaman sindikasi USD yang membengkak menempatkan CUAN pada risiko **gagal bayar (default)** atau **restrukturisasi utang** jika harga komoditas global jatuh mendadak. [Analisis Mendalam Saham Barito Group.pdf hal.11]",
+      "retrieved_chunk_ids": [
+        "2cfb57f40f81",
+        "96b270cdf06e",
+        "94aeed2cfd48",
+        "b92ebb8c4434",
+        "c96bdae84b2e",
+        "4d7c952a624f",
+        "fab6db5b741d",
+        "e52bc53223d7"
+      ],
+      "expected_keywords": [
+        "leverage",
+        "risiko"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "leverage",
+        "risiko"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "barito_05",
+      "question": "Apa strategi trading yang disarankan untuk BREN berdasarkan analisis Barito Group?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 4.9214,
+      "answer": "Strategi trading BREN yang disarankan dalam dokumen adalah rencana perdagangan teknikal dengan parameter ketat berikut:\n\n- Area Pembelian (Entry Zone): Rp 3.300 – Rp 3.500 (Area Pullback Support) [Analisis Mendalam Saham Barito Group.pdf hal.12]\n- Batas Proteksi (Stop Loss): Rp 2.900 (Penutupan di bawah Swing Low Baru) [Analisis Mendalam Saham Barito Group.pdf hal.12]\n- Target Profit 1 (Jangka Pendek): Rp 4.500 (Resisten Volume Profile & Overhang Divestasi) [Analisis Mendalam Saham Barito Group.pdf hal.12]\n\nDokumen juga menyebut pergerakan harga saham BREN telah membentuk pola dasar yang kuat pasca-penyerapan likuiditas jual paksa indeks global [Analisis Mendalam Saham Barito Group.pdf hal.12].",
+      "retrieved_chunk_ids": [
+        "381f0f01f5f9",
+        "34b47a0abba4",
+        "602d56487bc6",
+        "7938fd74d594",
+        "d01b1264e80f",
+        "e52bc53223d7",
+        "3a979367b7b0",
+        "a530ac063588"
+      ],
+      "expected_keywords": [
+        "3.300",
+        "2.900"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "3.300",
+        "2.900"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "blueprint_01",
+      "question": "Apa alasan MP Materials dianggap sebagai aset strategis dalam skenario Greenland?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 5.7438,
+      "answer": "MP Materials dianggap sebagai aset strategis dalam skenario Greenland karena disebut sebagai **\"Greenland Proxy\"** dan **aset ofensif**. MP Materials bukan sekadar perusahaan tambang, melainkan **aset keamanan nasional AS**. Dengan tambang **Mountain Pass di California**, MP adalah **satu-satunya produsen REE skala besar di Belahan Barat**. Pada akhir 2025, MP memperkuat posisinya melalui **kemitraan strategis dengan Departemen Pertahanan AS (DoD) dan Apple**, yang memastikan adanya **pembeli tetap (off-taker)** untuk produk magnetnya. Selain itu, faktor \"Greenland\" menjadi katalis tambahan: jika AS gagal mengamankan Greenland atau ketegangan meningkat, **nilai strategis Mountain Pass akan melonjak** [Blueprint Investasi Presisi Chaos Scenario.pdf hal.5].\n\nDalam skenario tersebut, MP juga termasuk saham tambang strategis yang diakumulasi institusi pada fase akumulasi senyap [Blueprint Investasi Presisi Chaos Scenario.pdf hal.2].",
+      "retrieved_chunk_ids": [
+        "7930df7b2459",
+        "ee537eeb2b4f",
+        "6a99581d2502",
+        "93841b32bc38",
+        "2a64f3762abd",
+        "71d92d692d6c",
+        "7ec1094b8eee",
+        "8c9e5a2f8baf"
+      ],
+      "expected_keywords": [
+        "MP Materials",
+        "strategis"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "MP Materials",
+        "strategis"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "blueprint_02",
+      "question": "Bagaimana perbedaan risiko dan potensi rebound antara ANTM dan MP Materials?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 9.8341,
+      "answer": "Perbedaan risiko dan potensi rebound ANTM vs MP Materials menurut dokumen:\n\n- **ANTM**\n  - Risiko: saat *panic selling* awal, rata-rata drawdown saham tambang strategis di negara berkembang seperti ANTM adalah **30–35% dari puncak lokal**; pada skenario Trade War 2018, drawdown ANTM mencapai **-34,5% selama 9 bulan** [Blueprint Investasi Presisi Chaos Scenario.pdf hal.5]. Implikasi 2026: siapkan penurunan **-20% s/d -30% di ANTM saat panik awal** [Blueprint Investasi Presisi Chaos Scenario.pdf hal.5].\n  - Risiko teknikal saat ini: RSI ANTM di **63,71** dan stokastik menunjukkan sinyal jenuh beli, sehingga berpotensi koreksi minor [Blueprint Investasi Presisi Chaos Scenario.pdf hal.6].\n  - Potensi rebound: **+50% (Recovery 2019)** dan ANTM lebih cocok untuk **swing moderat** [Blueprint Investasi Presisi Chaos Scenario.pdf hal.5].\n  - Peran: ANTM berfungsi sebagai lindung nilai terhadap inflasi komoditas dan pelemahan Rupiah [Blueprint Investasi Presisi Chaos Scenario.pdf hal.3].\n\n- **MP Materials**\n  - Risiko: dalam skenario Krisis REE 2010 (Molycorp), drawdown awal berupa **volatilitas tinggi intraday +/- 10%** [Blueprint Investasi Presisi Chaos Scenario.pdf hal.5].\n  - Potensi rebound: **+465% (Peak 2011)** dan MP memiliki potensi **multibagger** [Blueprint Investasi Presisi Chaos Scenario.pdf hal.5].\n  - Peran: MP Materials berfungsi sebagai lindung nilai terhadap gangguan pasokan teknologi AS [Blueprint Investasi Presisi Chaos Scenario.pdf hal.3].\n\nJadi, ANTM lebih diarahkan untuk **swing moderat** dengan risiko drawdown sekitar **20–35%** dan potensi rebound **+50%**, sedangkan MP Materials memiliki potensi **multibagger** dengan rebound historis **+465%**, tetapi risiko awalnya berupa **volatilitas tinggi intraday +/- 10%** [Blueprint Investasi Presisi Chaos Scenario.pdf hal.5].",
+      "retrieved_chunk_ids": [
+        "79575cfa89cb",
+        "2624100eca61",
+        "22ab040b241c",
+        "fb7256f68cdb",
+        "32496063e8e8",
+        "a34a3eb565f0",
+        "3beb9ec45774",
+        "1ca712a7f76c"
+      ],
+      "expected_keywords": [
+        "ANTM",
+        "MP Materials",
+        "rebound"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "ANTM",
+        "MP Materials",
+        "rebound"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "blueprint_03",
+      "question": "Mengapa ANTM diposisikan sebagai aset defensif atau hedge dalam Blueprint?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 5.783,
+      "answer": "ANTM diposisikan sebagai aset defensif/hedge dalam Blueprint karena:\n\n- ANTM dialokasikan 40% sebagai aset defensif untuk lindung nilai terhadap devaluasi Rupiah dan volatilitas komoditas [Blueprint Investasi Presisi Chaos Scenario.pdf hal.1].\n- Dalam tabel strategi, peran portofolio ANTM disebut **Defensif (Inflation/Currency Hedge)** [Blueprint Investasi Presisi Chaos Scenario.pdf hal.9].\n- ANTM dipilih karena peran gandanya, terutama sebagai **hedge emas**: divisi emas ANTM memiliki korelasi positif terhadap harga emas dunia [Blueprint Investasi Presisi Chaos Scenario.pdf hal.6].\n- ANTM juga disebut berfungsi sebagai lindung nilai terhadap **inflasi komoditas** dan **pelemahan mata uang (Rupiah)** [Blueprint Investasi Presisi Chaos Scenario.pdf hal.3].",
+      "retrieved_chunk_ids": [
+        "79575cfa89cb",
+        "5e5f8d4cad5d",
+        "e56a20f14df5",
+        "1ca712a7f76c",
+        "261bce437f67",
+        "318a01d2fee5",
+        "a793209474d8",
+        "c2c951ac7ec5"
+      ],
+      "expected_keywords": [
+        "ANTM",
+        "defensif",
+        "hedge"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "ANTM",
+        "defensif",
+        "hedge"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "blueprint_04",
+      "question": "Bagaimana pembagian alokasi portofolio 40% MP Materials, 40% ANTM, dan 20% cash dijelaskan dalam Blueprint?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 7.6055,
+      "answer": "Dalam Blueprint, alokasi **40% MP, 40% ANTM, dan 20% Cash** disebut sebagai konfigurasi yang **sangat optimal** untuk kondisi pasar yang diprediksi oleh Astronacci [Blueprint Investasi Presisi Chaos Scenario.pdf hal.7].\n\nPenjelasannya:\n- **40% MP Materials (Agresif)** diposisikan sebagai **Generator Alpha**, yaitu mesin pertumbuhan portofolio. Dengan volatilitas tinggi, alokasi 40% dianggap cukup besar untuk memberi dampak signifikan pada total return jika tesis Greenland terbukti benar, namun risikonya masih terukur [Blueprint Investasi Presisi Chaos Scenario.pdf hal.7].\n- **MP** dijelaskan sebagai **tombak/ofensif (Geopolitical Proxy)**, sedangkan **ANTM** sebagai **perisai/defensif (Inflation/Currency Hedge)**. Portofolio ini juga menyimpan **cadangan tunai**, sehingga dirancang untuk bertahan dan tumbuh di tengah badai geopolitik [Blueprint Investasi Presisi Chaos Scenario.pdf hal.9].\n- Tabel strategi eksekusi final menyebut alokasi **MP 40% (Rp10.800.000)** dari modal **Rp27.000.000** [Blueprint Investasi Presisi Chaos Scenario.pdf hal.9].",
+      "retrieved_chunk_ids": [
+        "cf6ec3874515",
+        "ba3adc66e8b5",
+        "e56a20f14df5",
+        "7d3ea15e8140",
+        "72b3304ef1f7",
+        "9f6d5a6b9d3e",
+        "ac0d2f390bcd",
+        "94aeed2cfd48"
+      ],
+      "expected_keywords": [
+        "40%",
+        "MP Materials",
+        "ANTM"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "40%",
+        "MP Materials",
+        "ANTM"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "blueprint_05",
+      "question": "Bagaimana konsep Shadow Hands atau smart money dijelaskan dalam skenario investasi 2026?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 6.4097,
+      "answer": "Dalam dokumen, konsep **Shadow Hands** dijelaskan sebagai istilah dari analisis Astronacci yang merujuk pada **Smart Money atau pelaku pasar institusional** yang memiliki kapasitas untuk menggerakkan harga aset secara signifikan [Blueprint Investasi Presisi Chaos Scenario.pdf hal.2].\n\nDalam konteks 2026, strategi mereka diprediksi akan **memanfaatkan narasi Greenland** untuk menciptakan kondisi yang memicu **kepanikan pasokan global** [Blueprint Investasi Presisi Chaos Scenario.pdf hal.2]. Implikasinya bagi investor adalah terciptanya **kelangkaan buatan (artificial scarcity)**; saham yang punya akses ke deposit REE di luar yurisdiksi China—khususnya **MP Materials**—diperdagangkan berdasarkan **premium keamanan nasional**, bukan rasio P/E [Blueprint Investasi Presisi Chaos Scenario.pdf hal.2]. Indonesia sebagai poros nikel dunia juga disebut akan terseret, menempatkan emiten seperti **ANTM** dalam posisi unik sebagai proksi komoditas strategis non-blok [Blueprint Investasi Presisi Chaos Scenario.pdf hal.2].",
+      "retrieved_chunk_ids": [
+        "5e5f8d4cad5d",
+        "aefc09ac6b18",
+        "0804ba64ab15",
+        "ad270b864abe",
+        "96b270cdf06e",
+        "1118eacbe6bd",
+        "15a31a3b302b",
+        "66c9d277e9ec"
+      ],
+      "expected_keywords": [
+        "Shadow Hands",
+        "smart money"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "Shadow Hands",
+        "smart money"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "equity_01",
+      "question": "Berapa harga rata-rata entry dan target TP1 BBRI menurut riset?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 1.5439,
+      "answer": "Harga rata-rata entry BBRI menurut riset adalah **Rp3.072**, dengan **TP1 Rp3.400 (+10,68%)** [Indonesian Equity Trading Research.pdf hal.16].",
+      "retrieved_chunk_ids": [
+        "a0f46844be03",
+        "97f0fa7d93dd",
+        "0f8b8d04b3d3",
+        "6b2e45c07047",
+        "09d2c9a720c7",
+        "c373c3c13b96",
+        "0d965610473c",
+        "8c03144b6a19"
+      ],
+      "expected_keywords": [
+        "3.072",
+        "3.400"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "3.072",
+        "3.400"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "equity_02",
+      "question": "Apa faktor fundamental utama yang mendukung BBRI?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 8.1236,
+      "answer": "Faktor fundamental utama yang disebutkan mendukung BBRI adalah:\n\n- BBRI merupakan pilar utama sektor perbankan nasional dengan fokus pada pembiayaan segmen mikro serta UMKM [Analisis IHSG 2026 & Saham Unggulan.pdf hal.11].\n- Valuasi BBRI dinilai murah: PBV berada di bawah rata-rata historis, dengan BVPS Rp2.246 dan harga saham Rp3.040 [Analisis IHSG 2026 & Saham Unggulan.pdf hal.11].\n- Ada perbaikan rasio dana murah (CASA) dari laporan bulanan perbankan [Analisis IHSG 2026 & Saham Unggulan.pdf hal.13].\n- Penempatan dana DHE SDA ke bank Himbara diyakini akan mempertebal profitabilitas BBRI [Analisis IHSG 2026 & Saham Unggulan.pdf hal.13]; BBRI juga disebut sebagai penerima manfaat langsung regulasi DHE SDA [Analisis IHSG 2026 & Saham Unggulan.pdf hal.10].\n- BBRI menjadi final pick dengan skor tertinggi 95,15, didukung oleh faktor valuasi lantai historis [Analisis IHSG 2026 & Saham Unggulan.pdf hal.10].\n- Parameter eksekusi menyebut margin pengaman dividen 13,75% [Analisis IHSG 2026 & Saham Unggulan.pdf hal.12].",
+      "retrieved_chunk_ids": [
+        "f3242ccb389f",
+        "6b2e45c07047",
+        "389fbf6ce23a",
+        "87c1e2db4493",
+        "7938fd74d594",
+        "c96bdae84b2e",
+        "8bb8bcdf1ef5",
+        "d01b1264e80f"
+      ],
+      "expected_keywords": [
+        "BBRI",
+        "fundamental"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "BBRI",
+        "fundamental"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "equity_03",
+      "question": "Bagaimana kondisi dan risiko saham BUMI?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 14.0249,
+      "answer": "Berdasarkan CONTEXT, kondisi saham BUMI adalah:\n\n- BUMI merupakan kandidat dari sektor energi yang diuji dan dibandingkan dengan ENRG [Indonesian Equity Trading Research.pdf hal.1].\n- Fundamental BUMI dinilai jauh lebih solid dibandingkan periode-periode sebelumnya setelah pemangkasan beban utang secara masif [Indonesian Equity Trading Research.pdf hal.9].\n- Valuasi BUMI: EV/Revenue 0,03x (sangat murah/extremely underpriced dibandingkan rata-rata sektor komoditas 1,74x), PER Forward 16,9x, dan PBV 2,36x–2,42x; konsensus analis Samuel Sekuritas & BRI Danareksa menetapkan target harga [Indonesian Equity Trading Research.pdf hal.9].\n- Harga saham BUMI pada angka 0,03x mencerminkan harga saham yang saat ini sangat di bawah nilai wajarnya (extremely underpriced) [Indonesian Equity Trading Research.pdf hal.21].\n- Akumulasi investor asing dan transaksi broker (smart money) mengonfirmasi adanya dukungan arus modal yang kuat pada BBRI dan BUMI [Indonesian Equity Trading Research.pdf hal.21].\n\nUntuk risiko spesifik saham BUMI, tidak ada rincian yang tersedia dalam CONTEXT.",
+      "retrieved_chunk_ids": [
+        "d01b1264e80f",
+        "84747ddfdb29",
+        "a9983b76f681",
+        "402d1f4f6114",
+        "96b270cdf06e",
+        "c96bdae84b2e",
+        "1118eacbe6bd",
+        "381f0f01f5f9"
+      ],
+      "expected_keywords": [
+        "stripping ratio",
+        "Rp172"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [],
+      "keyword_match": false,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "equity_04",
+      "question": "Berapa harga rata-rata entry BUMI dan berapa target harga konsensus analis?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 1.71,
+      "answer": "Harga rata-rata entry BUMI adalah **Rp186,8**, dan target harga konsensus analisnya adalah **Rp300** (TP3 Agresif) [Indonesian Equity Trading Research.pdf hal.17].",
+      "retrieved_chunk_ids": [
+        "51f9f11cc5e5",
+        "8c03144b6a19",
+        "97f0fa7d93dd",
+        "865bef51f954",
+        "0f8b8d04b3d3",
+        "ac0d2f390bcd",
+        "28410b5ddaf7",
+        "e79384fb42a7"
+      ],
+      "expected_keywords": [
+        "186,8",
+        "Rp300"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "186,8",
+        "Rp300"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "equity_05",
+      "question": "Bagaimana strategi atau parameter trading BBRI yang dibahas dalam Indonesian Equity Trading Research?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 12.0542,
+      "answer": "Dalam **Indonesian Equity Trading Research.pdf**, strategi BBRI dibahas sebagai **jangkar sektor perbankan** dalam portofolio trading dua saham berhorizon **31 Desember 2026**, dengan modal kerja **Rp14.000.000** dan profil risiko **moderat**. Pendekatannya memprioritaskan **proteksi modal**, disiplin manajemen risiko, serta eksekusi pada **asymmetric risk/reward ratio** [Indonesian Equity Trading Research.pdf hal.1].\n\nRezim pasar diklasifikasikan sebagai **BULLISH NEUTRAL (Selective Bullish)**, dengan penguatan indeks ditopang oleh rotasi modal dari saham-saham perbankan [Indonesian Equity Trading Research.pdf hal.2]. Kondisi pasar finansial Indonesia juga disebut berada pada fase **RISK-ON TERKENDALI**, dengan **BI-Rate 5,75%**, Rupiah pada kisaran **Rp17.730–Rp17.833 per USD**, dan SBN 10 Tahun di **6,95%** [Indonesian Equity Trading Research.pdf hal.3].\n\nParameter eksekusi spesifik BBRI seperti **initial entry Rp3.000–Rp3.100**, alokasi **50% dari total dana investasi**, masuk pada harga pasar **Rp3.040**, dan margin pengaman dividen **13,75%** tercantum dalam [Analisis IHSG 2026 & Saham Unggulan.pdf hal.12].",
+      "retrieved_chunk_ids": [
+        "c3acdff9b8c1",
+        "d01b1264e80f",
+        "c96bdae84b2e",
+        "618cc2936711",
+        "f41716c8b263",
+        "70d4dee1d07b",
+        "7d249030b3c8",
+        "47867da91f99"
+      ],
+      "expected_keywords": [
+        "BBRI",
+        "trading"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "BBRI",
+        "trading"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "oos_01",
+      "question": "Siapa presiden Indonesia tahun 2035?",
+      "type": "out_of_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 0.9822,
+      "answer": "Maaf, informasi itu tidak ada di dokumen saya.",
+      "retrieved_chunk_ids": [
+        "b47a49f1e2a9",
+        "892e04401aa4",
+        "92edd0bccb1b",
+        "30a925de87e2",
+        "c84218fdc454",
+        "618cc2936711",
+        "f724d320ce42",
+        "3c8b541dd34d"
+      ],
+      "expected_keywords": [],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [],
+      "keyword_match": false,
+      "citation": false,
+      "citation_accuracy": null,
+      "refusal": true
+    },
+    {
+      "id": "oos_02",
+      "question": "Bagaimana cara memasak nasi goreng?",
+      "type": "out_of_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 0.8974,
+      "answer": "Maaf, informasi itu tidak ada di dokumen saya.",
+      "retrieved_chunk_ids": [
+        "6ec2b25755c9",
+        "4254e52fe537",
+        "e833a91c5111",
+        "e8bd8637c3b0",
+        "0f4eac4416ac",
+        "73725c08dde5",
+        "c3f667093597",
+        "8d94c48f37b8"
+      ],
+      "expected_keywords": [],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [],
+      "keyword_match": false,
+      "citation": false,
+      "citation_accuracy": null,
+      "refusal": true
+    },
+    {
+      "id": "oos_03",
+      "question": "Berapa harga emas dunia hari ini?",
+      "type": "out_of_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 3.2387,
+      "answer": "Harga emas dunia disebutkan bertahan kukuh pada kisaran US$4.516/oz [Indonesian Equity Trading Research.pdf hal.3].",
+      "retrieved_chunk_ids": [
+        "a793209474d8",
+        "84367d8ec0ba",
+        "e6a5cf12fe15",
+        "2d88085fa383",
+        "a402b237110b",
+        "f85f5b290be4",
+        "caab13b3476a",
+        "8e2a8900806b"
+      ],
+      "expected_keywords": [],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [],
+      "keyword_match": false,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "oos_04",
+      "question": "Bagaimana cara memperbaiki AC yang rusak?",
+      "type": "out_of_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 0.9193,
+      "answer": "Maaf, informasi itu tidak ada di dokumen saya.",
+      "retrieved_chunk_ids": [
+        "c591422807a0",
+        "0b2497668e5f",
+        "8a3e6fbd05c8",
+        "1c705b81363b",
+        "31980b9ad57c",
+        "fbf77fb847f1",
+        "0deed2815ec2",
+        "df9077fc0a00"
+      ],
+      "expected_keywords": [],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [],
+      "keyword_match": false,
+      "citation": false,
+      "citation_accuracy": null,
+      "refusal": true
+    },
+    {
+      "id": "oos_05",
+      "question": "Apa rekomendasi laptop terbaik untuk mahasiswa tahun ini?",
+      "type": "out_of_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 1.0605,
+      "answer": "Maaf, informasi itu tidak ada di dokumen saya.",
+      "retrieved_chunk_ids": [
+        "2780cdeba491",
+        "3c8b541dd34d",
+        "ed1a91ab6288",
+        "17d399b1c01d",
+        "94363306710e",
+        "05484e3df347",
+        "8bb8bcdf1ef5",
+        "46de9ac2442c"
+      ],
+      "expected_keywords": [],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [],
+      "keyword_match": false,
+      "citation": false,
+      "citation_accuracy": null,
+      "refusal": true
+    },
+    {
+      "id": "dc_01",
+      "question": "Apa keunggulan penjualan lahan data center bagi kawasan industri, dari sisi premi harga dan margin laba kotor menurut riset?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 4.9873,
+      "answer": "Keunggulan penjualan lahan data center bagi kawasan industri menurut riset:\n\n- **Premi harga:** kavling data center diperdagangkan dengan ASP **30%–50% lebih tinggi** dibandingkan kavling manufaktur standar [Riset Saham Data Center Indonesia.pdf hal.1]. DMAS disebut mampu menjual kavling data center **Rp3,2 juta–Rp3,8 juta per meter persegi**, atau **30%–50% lebih tinggi** dibandingkan kavling industri konvensional [Riset Saham Data Center Indonesia.pdf hal.34].\n- **Margin laba kotor:** penjualan kavling industri tersebut membukukan **marjin laba kotor melampaui 70%** [Riset Saham Data Center Indonesia.pdf hal.34]. Lebih dari **85% laba bersih DMAS** disumbang oleh penjualan infrastruktur kawasan industri teknologi tinggi dengan **margin laba kotor di atas 70%** [Riset Saham Data Center Indonesia.pdf hal.39].",
+      "retrieved_chunk_ids": [
+        "e887c6d5c611",
+        "a8d683de3523",
+        "033cc33bcddc",
+        "318a01d2fee5",
+        "2b21d280ec23",
+        "323de7a024b8",
+        "47849293a143",
+        "f724d320ce42"
+      ],
+      "expected_keywords": [
+        "30%",
+        "50%",
+        "65%"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "30%",
+        "50%"
+      ],
+      "keyword_match": false,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "dc_02",
+      "question": "Berapa kapasitas listrik data center yang dikontrak POWR pada semester I-2026, kenaikannya dari akhir 2025, dan porsinya terhadap konsumsi pelanggan industri?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 2.2359,
+      "answer": "Kapasitas listrik data center yang dikontrak POWR pada semester I-2026 adalah **274 MW**, meningkat **47 MW** dari posisi akhir 2025, dan mewakili **12%** dari total konsumsi listrik pelanggan industri perseroan [Riset Saham Data Center Indonesia.pdf hal.33].",
+      "retrieved_chunk_ids": [
+        "b5f2d13c15ee",
+        "503c3928767e",
+        "b4cf99544c32",
+        "033cc33bcddc",
+        "4b48fb98cc70",
+        "643bc5ec712c",
+        "103888188e86",
+        "7e0812c2ad73"
+      ],
+      "expected_keywords": [
+        "274 MW",
+        "47 MW",
+        "12%"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "274 MW",
+        "47 MW",
+        "12%"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "dc_03",
+      "question": "Apa katalis pasokan gas dan proyeksi kontrak data center yang mendasari infleksi laba POWR pada 2026–2027?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 8.649,
+      "answer": "Infleksi laba POWR pada 2026–2027 didorong oleh:\n\n- **Katalis pasokan gas:** penyelesaian kendala pasokan alokasi gas bumi dari PGAS dan Pertamina EP per April 2026, yang memulihkan marjin kotor pembangkitan gas mulai kuartal III-2026 [Riset Saham Data Center Indonesia.pdf hal.33]. Hal ini juga disebut sebagai pemulihan pasokan alokasi gas penuh per April 2026 dan normalisasi marjin operasional pembangkitan gas mulai kuartal III-2026 setelah tertekan pada semester II-2025 [Riset Saham Data Center Indonesia.pdf hal.9]. Normalisasi pasokan gas berbiaya murah per April 2026 menciptakan pemulihan marjin kotor seketika pada semester II-2026 [Riset Saham Data Center Indonesia.pdf hal.38].\n\n- **Proyeksi kontrak data center:** pada semester I-2026, kapasitas terkontrak POWR dari sektor data center tercatat 274 MW atau 12% dari total konsumsi industri. Manajemen memproyeksikan kontrak meningkat menjadi 303 MW pada akhir 2026 dan melonjak ke 385 MW pada 2027 (+27% YoY), menguasai sekitar 17% dari total profil beban daya [Riset Saham Data Center Indonesia.pdf hal.13]. Untuk memenuhi target tersebut, POWR melakukan komisioning penambahan 4x12,5 MW turbin gas baru pada akhir 2026 sehingga kapasitas terpasang menjadi 1.194 MW [Riset Saham Data Center Indonesia.pdf hal.33]. Lonjakan kontrak data center dari 274 MW menuju 303 MW pada 2026 dan 385 MW pada 2027 juga tercatat [Riset Saham Data Center Indonesia.pdf hal.9], dan lonjakan ke 385 MW pada 2027 didasarkan pada pembangunan fisik gedung hyperscaler yang sedang berlangsung [Riset Saham Data Center Indonesia.pdf hal.38].",
+      "retrieved_chunk_ids": [
+        "4b48fb98cc70",
+        "503c3928767e",
+        "267d9a5c0a10",
+        "8a3e6fbd05c8",
+        "ff99634721bc",
+        "fca53838f050",
+        "5ed0a327e1e5",
+        "a03f5ee81012"
+      ],
+      "expected_keywords": [
+        "April 2026",
+        "303 MW",
+        "385 MW"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "April 2026",
+        "303 MW",
+        "385 MW"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "dc_04",
+      "question": "Bagaimana valuasi P/E dan PBV POWR dalam riset data center?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 1.4213,
+      "answer": "Valuasi POWR dalam riset tersebut adalah **P/E 12,3x** dan **PBV 1,2x** [Riset Saham Data Center Indonesia.pdf hal.16].",
+      "retrieved_chunk_ids": [
+        "b55b6b77a1a3",
+        "103888188e86",
+        "a8d683de3523",
+        "9aae4dcd7611",
+        "d02ae09bd238",
+        "8c54487fcdf4",
+        "d1b8309c8212",
+        "a03f5ee81012"
+      ],
+      "expected_keywords": [
+        "12,3",
+        "1,2"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "12,3",
+        "1,2"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "dc_05",
+      "question": "Bagaimana pendapatan dan laba bersih DMAS pada semester I-2026 menurut riset data center, termasuk pertumbuhan tahunannya?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 9.1137,
+      "answer": "Pendapatan DMAS pada semester I-2026 tercatat Rp1,80 triliun, tumbuh +194% YoY, ditopang penjualan lahan industri [Riset Saham Data Center Indonesia.pdf hal.10]. Untuk laba bersih, CONTEXT hanya menyebutkan marjin laba bersih DMAS mencapai 66,1% pada semester I-2026 [Riset Saham Data Center Indonesia.pdf hal.12]; nilai nominal laba bersih dan pertumbuhan tahunannya tidak disebutkan dalam CONTEXT.",
+      "retrieved_chunk_ids": [
+        "323de7a024b8",
+        "a8d683de3523",
+        "37ce1eee921c",
+        "b6c6addbb6a8",
+        "503c3928767e",
+        "7ed224c16cdc",
+        "3d41dbc93573",
+        "53b8adaef2a7"
+      ],
+      "expected_keywords": [
+        "1,80",
+        "1,19",
+        "194%",
+        "175%"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "1,80",
+        "194%"
+      ],
+      "keyword_match": false,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "dc_06",
+      "question": "Apa risiko utama ekspansi PGEO yang diuraikan dalam riset data center?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 1.9972,
+      "answer": "Risiko utama ekspansi PGEO yang diuraikan dalam riset data center meliputi kegagalan teknis pengeboran sumur eksplorasi uap, perpanjangan negosiasi kontrak PPA dengan PLN, serta potensi penundaan jadwal operasi komersial proyek ekspansi [Riset Saham Data Center Indonesia.pdf hal.37].",
+      "retrieved_chunk_ids": [
+        "7e0812c2ad73",
+        "15a31a3b302b",
+        "1083352e3687",
+        "1118eacbe6bd",
+        "c96bdae84b2e",
+        "6639ffab7a88",
+        "033cc33bcddc",
+        "a03f5ee81012"
+      ],
+      "expected_keywords": [
+        "pengeboran",
+        "PPA",
+        "PLN"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "pengeboran",
+        "PPA",
+        "PLN"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "dc_07",
+      "question": "Mengapa riset data center mengingatkan agar tidak mengejar saham DCII meskipun kualitas operasionalnya unggul?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 2.5956,
+      "answer": "Riset data center mengingatkan agar tidak mengejar DCII karena meskipun kualitas operasionalnya unggul, valuasinya sudah sangat ekstrem. DCII dinilai sebagai operator data center Tier IV terkemuka di Asia Tenggara dengan keunggulan rekayasa fasilitas dan efisiensi energi, tetapi kapitalisasi pasarnya telah menembus Rp472 triliun dengan P/E di atas 422x dan PBV di atas 40x, sehingga dilabeli **Great Company, Bad Entry** dan berisiko mengalami kompresi valuasi (*multiple derating*) [Riset Saham Data Center Indonesia.pdf hal.39]. DCII juga tereliminasi karena valuasi ekstrem tersebut serta *free float* publik yang hanya 1,8% [Riset Saham Data Center Indonesia.pdf hal.28].",
+      "retrieved_chunk_ids": [
+        "ddcd7213c907",
+        "e887c6d5c611",
+        "3a979367b7b0",
+        "103888188e86",
+        "bf16c7eb1772",
+        "60196b5be99d",
+        "a8d683de3523",
+        "12025e3fe507"
+      ],
+      "expected_keywords": [
+        "422x",
+        "40x"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "422x",
+        "40x"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    },
+    {
+      "id": "dc_08",
+      "question": "Siapa mitra strategis PGEO yang membuka akses pendanaan hijau dan berapa porsi sahamnya menurut riset data center?",
+      "type": "in_scope",
+      "status": "ok",
+      "error": null,
+      "latency_seconds": 2.1356,
+      "answer": "Mitra strategis PGEO yang membuka akses pendanaan hijau adalah **Masdar**, Sovereign Wealth Fund energi terbarukan Abu Dhabi, dengan porsi saham **15,00%** [Riset Saham Data Center Indonesia.pdf hal.21]. Kemitraan ini juga disebut membuka akses pendanaan hijau berbunga rendah, dengan Masdar memegang **15%** saham perseroan [Riset Saham Data Center Indonesia.pdf hal.36].",
+      "retrieved_chunk_ids": [
+        "fdff72866992",
+        "4ad8bb4e0d61",
+        "a03f5ee81012",
+        "6ff9e71a38f3",
+        "7e0812c2ad73",
+        "e43d7852c396",
+        "f0e5feaf2631",
+        "62d8447586f7"
+      ],
+      "expected_keywords": [
+        "Masdar",
+        "15%"
+      ],
+      "intent": null,
+      "trace": null,
+      "matched_keywords": [
+        "Masdar",
+        "15%"
+      ],
+      "keyword_match": true,
+      "citation": true,
+      "citation_accuracy": 1.0,
+      "refusal": false
+    }
+  ],
+  "mode": "rag_only",
+  "dataset_fingerprint": "eeae64b5f63f",
+  "question_dataset_sha256": "6e15da6066a034adbad7434cdc11a4e2158709a1a3b14ebc8c1bbdffa87be39c",
+  "retrieval_mode": "similarity",
+  "embedding_source": "cache_lokal",
+  "huggingface_requests": 0,
+  "yahoo_requests": {
+    "requests": 0,
+    "cache_hits": 0
+  }
+}

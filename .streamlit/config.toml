@@ -1,0 +1,25 @@
+# Konfigurasi Streamlit untuk Asisten Research Bursa Saham.
+#
+# Hanya berisi hal yang berkaitan dengan cara menjalankan aplikasi.
+# Tidak ada rahasia di sini — kredensial tetap di .env.
+
+[server]
+# Streamlit memantau berkas dengan menelusuri setiap modul di
+# sys.modules dan membaca `__path__._path`-nya. PyTorch (dibawa
+# sentence-transformers) memakai registry kelas kustom yang melempar
+# saat atribut itu diakses, sehingga terminal dibanjiri:
+#
+#   Examining the path of torch.classes raised:
+#   RuntimeError: Tried to instantiate class '__path__._path' ...
+#
+# Peringatan itu tidak berbahaya — aplikasinya tetap jalan — tetapi
+# membuat log tidak terbaca. Mematikan pemantau berkas menghilangkannya
+# sepenuhnya. Konsekuensinya: perubahan kode tidak lagi memuat ulang
+# otomatis, jadi Streamlit perlu dijalankan ulang setelah mengedit.
+#
+# Saat sedang aktif mengembangkan, ganti sementara ke "auto".
+fileWatcherType = "none"
+maxUploadSize = 5
+
+[browser]
+gatherUsageStats = false

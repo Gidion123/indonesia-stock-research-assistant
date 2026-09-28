@@ -1,0 +1,12 @@
+{
+  "label": "B: current five-PDF corpus with legacy 25 questions; saved before this pass",
+  "corpus_chunks": 489,
+  "pdf_sha256": {
+    "Analisis IHSG 2026 & Saham Unggulan.pdf": "a586de29eaa138928d704200c532d712be57a996a1d10539ab305ac80fb40e75",
+    "Analisis Mendalam Saham Barito Group.pdf": "a437b65caf0b2837310952695d72fc355bdc99caeb5555f6838e0ad96e2a5876",
+    "Blueprint Investasi Presisi Chaos Scenario.pdf": "90872b160be2fa93d24d25ecb6de031c1f886f5b889aa12dfadb19b765d11ade",
+    "Indonesian Equity Trading Research.pdf": "1d3c4e4b7353a683fbc36570747f46f2855225a729e80f0c2de3dd6eb132d9aa",
+    "Riset Saham Data Center Indonesia.pdf": "e7af805ab29eeb623daed18812dc335e65ec5bfa70674d808d9d0558d690f611"
+  },
+  "retrieval_fingerprint": "27195dcc002f"
+}

@@ -1,0 +1,6 @@
+{
+  "label": "A: historical four-PDF / 308-chunk / 25-question benchmark",
+  "restored_from_git_commit": "2af73e3ee414e66789b5d23f6d06c7231a1211dd",
+  "retrieval_fingerprint": "d2768255a0ff",
+  "not_rerun_this_pass": true
+}

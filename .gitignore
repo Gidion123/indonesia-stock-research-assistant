@@ -1,0 +1,40 @@
+# Virtual environment
+.venv/
+venv/
+env/
+rag-stock-assistant/
+
+# Environment variables
+.env
+.env.vps
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# VS Code
+.vscode/
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Logs
+*.log
+
+# Database backups
+*.dump
