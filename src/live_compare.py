@@ -1,6 +1,6 @@
 """
-The LIVE_COMPARE path: market price compared against the research
-documents.
+The LIVE_COMPARE paths: explicit market quotes compared deterministically,
+or one stock's market price compared against research documents.
 
 The riskiest path in this system, because two sources with different
 natures feed one answer:
@@ -19,7 +19,7 @@ Three rules here:
     asked to "compare" without numbers will invent them.
 """
 
-from src.market_data import ambil_harga, format_market_data
+from src.market_data import ambil_harga, format_market_data, ringkas_untuk_pengguna
 from src.market_symbols import build_yahoo_symbol
 from src.profit_loss import (
     ekstrak_harga_entry,
@@ -174,4 +174,71 @@ def tangani(question, resolution, llm=None, retriever=None, k=None):
     }
 
 
-__all__ = ["tangani"]
+def tangani_multi(question, resolutions):
+    """Compare explicit stocks using provider-labelled quotes, without an LLM.
+
+    Per-symbol results stay in market_data.items; no arbitrary single stock
+    becomes the conversation identity. Missing prices cannot enter arithmetic.
+    """
+    quotes, paragraphs = [], []
+    for resolution in resolutions:
+        symbol = build_yahoo_symbol(resolution["ticker"], resolution["market"])
+        if symbol is None:
+            data = {"symbol": resolution["ticker"], "status": "invalid_symbol",
+                    "price": None}
+        else:
+            data = ambil_harga(symbol)
+        quotes.append(data)
+        if data["status"] != "ok":
+            paragraphs.append(
+                f"{data['symbol']}: " + pesan_harga_gagal(data["symbol"], data["status"])
+            )
+            continue
+        source = {
+            "eodhd_eod": "EODHD (EOD)",
+            "fast_info": "Yahoo Finance",
+            "history": "Yahoo Finance (history)",
+        }.get(data.get("source"), "tidak tersedia")
+        paragraphs.append(
+            ringkas_untuk_pengguna(data, _label(resolution))
+            + f"\nSumber: {source}. Waktu data: {data.get('as_of') or 'tidak tersedia'}."
+        )
+
+    available = [data for data in quotes if data["status"] == "ok"]
+    status = "ok" if len(available) == len(quotes) else "partial"
+    if not available:
+        status = "market_data_unavailable"
+    if len(available) == len(quotes) and len(available) >= 2:
+        currencies = {data.get("currency") for data in available}
+        if len(currencies) == 1 and None not in currencies and "" not in currencies:
+            low = min(available, key=lambda data: data["price"])
+            high = max(available, key=lambda data: data["price"])
+            difference = high["price"] - low["price"]
+            if difference == 0:
+                paragraphs.append("Harga nominal per saham sama pada data yang tersedia.")
+            else:
+                paragraphs.append(
+                    f"Harga nominal per saham {high['symbol']} lebih tinggi daripada "
+                    f"{low['symbol']} dengan selisih {high['currency']} {difference:,.2f}."
+                )
+            paragraphs.append(
+                "Ini perbandingan harga nominal per saham, bukan penilaian valuasi. "
+                "Harga memakai waktu/sumber masing-masing di atas, bukan snapshot serentak."
+            )
+        else:
+            paragraphs.append("Selisih nominal tidak dihitung karena mata uang berbeda atau tidak diketahui.")
+    else:
+        paragraphs.append("Perbandingan belum lengkap karena sebagian data harga tidak tersedia.")
+
+    return {
+        "answer": "\n\n".join(paragraphs),
+        "status": status,
+        "market_data": {"items": quotes, "from_cache": bool(quotes) and all(
+            data.get("from_cache", False) for data in quotes
+        )},
+        "documents": [], "sources_used": ["market_data"],
+        "profit_loss": None, "error": None,
+    }
+
+
+__all__ = ["tangani", "tangani_multi"]

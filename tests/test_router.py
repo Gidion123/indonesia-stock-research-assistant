@@ -219,3 +219,43 @@ def test_tidak_ada_pertanyaan_sah_ditolak_router():
             salah_tolak.append(item["id"])
 
     assert salah_tolak == [], salah_tolak
+
+
+
+@pytest.mark.parametrize("question", [
+    "Bandingkan harga BBRI dan BMRI sekarang.",
+    "Bandingkan BBRI dengan BMRI.",
+    "BBRI vs BMRI",
+    "Bandingkan BBCA dan TLKM sekarang.",
+    "BMRI versus BBNI",
+    "ASII dibandingkan TLKM sekarang",
+    "BBRI dan BMRI mana yang lebih murah sekarang?",
+    "bandingkan bbri dan bmri sekarang",
+])
+def test_explicit_market_comparison_is_deterministic(question):
+    result = classify_router_intent(question, llm=LLMGagal())
+    assert result["intent"] == INTENT_LIVE_COMPARE
+    assert result["method"] == "pattern"
+    assert result["llm_calls"] == 0
+
+
+@pytest.mark.parametrize("question", [
+    "Bandingkan fundamental BBRI dan BMRI menurut riset.",
+    "Bagaimana prospek BBRI dan BMRI?",
+    "BBRI dan BMRI mana yang lebih bagus menurut riset?",
+])
+def test_research_questions_with_two_tickers_stay_rag(question):
+    assert classify_by_pattern(question)[0] == INTENT_RAG
+
+
+def test_and_alone_does_not_request_market_comparison():
+    from src.router import is_multi_ticker_market_comparison
+    assert not is_multi_ticker_market_comparison("Harga BBRI dan BMRI sekarang?")
+
+
+
+def test_company_performance_comparison_does_not_force_market_fetch():
+    from src.router import is_multi_ticker_market_comparison
+    question = "Bandingkan kinerja BBRI dan BMRI."
+    assert not is_multi_ticker_market_comparison(question)
+    assert classify_router_intent(question, izinkan_llm=False)["intent"] == INTENT_RAG

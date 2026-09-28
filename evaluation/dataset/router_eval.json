@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "description": "Dataset evaluasi router + entity resolver. Setiap baris berlabel intent yang benar dan, kalau ada, ticker yang seharusnya dikenali. Tanpa dataset ini, akurasi router hanya asumsi.",
   "catatan": "expected_ticker null berarti pertanyaan itu memang tidak menunjuk saham tertentu. expected_resolution menyatakan hasil resolver yang benar, bukan sekadar ticker.",
   "items": [
@@ -130,11 +130,11 @@
     },
     {
       "id": "ambigu_01",
-      "question": "BBRI dan BMRI mana yang lebih murah sekarang?",
+      "question": "Harga BBRI atau BMRI sekarang?",
       "expected_intent": "LIVE_PRICE",
       "expected_ticker": null,
       "expected_resolution": "ambiguous",
-      "catatan": "Membandingkan dua saham pada harga hari ini tidak butuh dokumen riset, jadi LIVE_PRICE. Dua ticker: resolver yang harus bertanya balik, bukan memilih sendiri."
+      "catatan": "Alternatif dengan kata atau, tanpa permintaan perbandingan: tetap LIVE_PRICE dan meminta klarifikasi satu ticker. Perbandingan eksplisit dua ticker kini diuji sebagai LIVE_COMPARE di regression tests."
     },
     {
       "id": "ambigu_02",

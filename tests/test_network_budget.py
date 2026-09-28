@@ -144,7 +144,7 @@ def test_out_of_scope_nol_request_yahoo(hitung_request, question):
 
 def test_ambiguitas_nol_request_yahoo(hitung_request):
     """Yahoo tidak boleh disentuh sebelum entitas pasti."""
-    hasil = assistant.jawab("BBRI dan BMRI mana yang lebih murah sekarang?")
+    hasil = assistant.jawab("Harga BBRI atau BMRI sekarang?")
 
     assert hasil["status"] == "ambiguous"
     assert hitung_request == []
@@ -264,3 +264,19 @@ def test_jalur_cepat_nol_llm(hitung_request):
     assert llm.dipanggil == 0
     assert hasil["trace"]["router_llm_calls"] == 0
     assert hasil["trace"]["resolution_llm_calls"] == 0
+
+
+
+def test_multi_compare_two_requests_then_cache_without_llm(hitung_request):
+    question = "Bandingkan harga BBRI dan BMRI sekarang."
+    llm = LLMPalsu()
+    first = assistant.jawab(question, llm=llm)
+    second = assistant.jawab(question, llm=llm)
+
+    assert first["intent"] == "LIVE_COMPARE"
+    assert first["status"] == second["status"] == "ok"
+    assert hitung_request == ["BBRI.JK", "BMRI.JK"]
+    assert len(second["market_data"]["items"]) == 2
+    assert second["trace"]["market_data_from_cache"] is True
+    assert llm.dipanggil == 0
+    assert first["trace"]["answer_llm_calls"] == 0

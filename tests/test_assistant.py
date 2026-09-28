@@ -147,13 +147,13 @@ def test_out_of_scope_tidak_memanggil_yahoo_maupun_llm():
 
 def test_ambiguitas_tidak_memanggil_yahoo():
     """
-    Yahoo tidak boleh dipanggil sebelum entity resolution selesai —
-    dua ticker berarti belum selesai.
+    Satu nama grup yang menunjuk beberapa emiten tetap butuh klarifikasi.
     """
     harga = HargaPalsu()
 
     hasil = jawab_dengan_harga(
-        "BBRI dan BMRI mana yang lebih murah sekarang?", harga
+        "Harga saham Barito sekarang berapa?", harga,
+        retriever=RetrieverPalsu(DOKUMEN_BARITO), llm=llm_ambigu_barito(),
     )
 
     assert hasil["status"] == "ambiguous"
@@ -453,13 +453,14 @@ def test_ambigu_bertanya_balik_dengan_kandidat_terisi():
     di layar pengguna.
     """
     hasil = jawab_dengan_harga(
-        "BBRI dan BMRI mana yang lebih murah sekarang?", HargaPalsu()
+        "Harga saham Barito sekarang berapa?", HargaPalsu(),
+        retriever=RetrieverPalsu(DOKUMEN_BARITO), llm=llm_ambigu_barito(),
     )
 
     assert hasil["status"] == "ambiguous"
     assert "{kandidat}" not in hasil["answer"]
-    assert "BBRI" in hasil["answer"]
-    assert "BMRI" in hasil["answer"]
+    assert "Maksud Anda yang mana?" in hasil["answer"]
+    assert all(ticker in hasil["answer"] for ticker in ("BREN", "BRPT", "TPIA"))
 
 
 # ============================================================
@@ -695,3 +696,147 @@ def test_giliran_kedua_di_luar_cakupan_tidak_mewarisi_saham():
     assert hasil["resolution"]["level"] != "session"
     assert harga.jumlah == 0, "Yahoo tidak boleh ditembak untuk BBRI"
     assert "4,210" not in (hasil["answer"] or "")
+
+
+
+# Same Barito group ambiguity represented by the resolver's existing fixtures.
+DOKUMEN_BARITO = [Document(
+    page_content="Grup Barito: Barito Renewables (BREN), Barito Pacific (BRPT), Chandra Asri (TPIA).",
+    metadata={"source": "barito.pdf", "page": 4, "chunk_id": "b1"},
+)]
+
+
+def llm_ambigu_barito():
+    return LLMPalsu(
+        '{"ticker": "", "market": "UNKNOWN", "confidence": "low", '
+        '"alternatives": ["BREN", "BRPT", "TPIA"]}'
+    )
+
+
+def multi_quote(symbol):
+    from src.market_data import DISCLAIMER_EODHD
+    price = 4210.0 if symbol == "BBRI.JK" else 5000.0
+    return dict(HARGA_BBRI, symbol=symbol, price=price,
+                previous_close=price - 50, change=50.0,
+                change_percent=round(50 / (price - 50) * 100, 4),
+                source="eodhd_eod", as_of="2026-09-25",
+                disclaimer=DISCLAIMER_EODHD)
+
+
+@pytest.mark.parametrize("question,symbols", [
+    ("Bandingkan harga BBRI dan BMRI sekarang.", ["BBRI.JK", "BMRI.JK"]),
+    ("Bandingkan BBRI dengan BMRI.", ["BBRI.JK", "BMRI.JK"]),
+    ("BBRI vs BMRI", ["BBRI.JK", "BMRI.JK"]),
+    ("Bandingkan BBCA dan TLKM sekarang.", ["BBCA.JK", "TLKM.JK"]),
+    ("BMRI vs BBNI", ["BMRI.JK", "BBNI.JK"]),
+    ("ASII vs TLKM", ["ASII.JK", "TLKM.JK"]),
+    ("BBRI dan BMRI mana yang lebih murah sekarang?", ["BBRI.JK", "BMRI.JK"]),
+])
+def test_multi_compare_preserves_symbols_without_false_ambiguity(question, symbols):
+    llm, retriever = LLMPalsu(), RetrieverPalsu()
+    with patch.object(live_compare, "ambil_harga", side_effect=multi_quote) as market, patch.object(
+        live_compare, "tangani_multi", wraps=live_compare.tangani_multi
+    ) as handler, patch.object(live_compare, "tangani") as single:
+        result = assistant.jawab(question, llm=llm, retriever=retriever)
+    assert result["intent"] == INTENT_LIVE_COMPARE
+    assert result["status"] == "ok"
+    assert "Maksud Anda yang mana?" not in result["answer"]
+    assert [call.args[0] for call in market.call_args_list] == symbols
+    assert [item["ticker"] for item in result["resolutions"]] == [s[:-3] for s in symbols]
+    assert all(item["market"] == "IDX" for item in result["resolutions"])
+    assert all(s in result["answer"] for s in symbols)
+    assert len(result["market_data"]["items"]) == 2
+    assert result["answer"].count("EODHD (EOD)") == 2
+    assert "bukan kuotasi intraday atau real-time" in result["answer"]
+    assert "bukan penilaian valuasi" in result["answer"]
+    assert result["trace"]["answer_llm_calls"] == 0
+    assert result["resolution"] is None
+    assert assistant.perbarui_konteks_sesi(None, result) is None
+    assert result["profit_loss"] is None
+    assert result["documents"] == []
+    assert result["sources_used"] == ["market_data"]
+    assert llm.dipanggil == retriever.dipanggil == 0
+    handler.assert_called_once()
+    single.assert_not_called()
+
+
+@pytest.mark.parametrize("failed", [{"BMRI.JK"}, {"BBRI.JK"}, {"BBRI.JK", "BMRI.JK"}])
+def test_multi_compare_handles_missing_prices_without_fabrication(failed):
+    def fetch(symbol):
+        if symbol in failed:
+            return dict(multi_quote(symbol), status="transient_error", price=None,
+                        error="internal provider detail")
+        return multi_quote(symbol)
+    with patch.object(live_compare, "ambil_harga", side_effect=fetch):
+        result = assistant.jawab("Bandingkan harga BBRI dan BMRI sekarang.")
+    assert result["status"] == ("partial" if len(failed) == 1 else "market_data_unavailable")
+    assert "belum lengkap" in result["answer"]
+    assert "selisih" not in result["answer"]
+    assert "internal provider detail" not in result["answer"]
+    for item in result["market_data"]["items"]:
+        assert item["symbol"] in result["answer"]
+        if item["symbol"] in failed:
+            assert item["price"] is None
+        else:
+            assert f"{item['price']:,.2f}" in result["answer"]
+
+
+def test_multi_compare_keeps_mixed_sources_dates_and_nominal_difference():
+    def fetch(symbol):
+        if symbol == "BMRI.JK":
+            from src.market_data import DISCLAIMER_HARGA
+            return dict(multi_quote(symbol), source="fast_info", as_of="2026-09-28T03:00:00Z",
+                        disclaimer=DISCLAIMER_HARGA)
+        return multi_quote(symbol)
+    with patch.object(live_compare, "ambil_harga", side_effect=fetch):
+        result = assistant.jawab("BBRI vs BMRI")
+    assert "IDR 790.00" in result["answer"]
+    assert "2026-09-25" in result["answer"]
+    assert "2026-09-28T03:00:00Z" in result["answer"]
+    assert "EODHD (EOD)" in result["answer"]
+    assert "Yahoo Finance" in result["answer"]
+    assert "bukan snapshot serentak" in result["answer"]
+
+
+def test_multi_compare_does_not_subtract_different_currencies():
+    def fetch(symbol):
+        return dict(multi_quote(symbol), currency="USD" if symbol == "MP" else "IDR")
+    with patch.object(live_compare, "ambil_harga", side_effect=fetch) as market:
+        result = assistant.jawab("Bandingkan $MP vs BBRI")
+    assert [call.args[0] for call in market.call_args_list] == ["MP", "BBRI.JK"]
+    assert result["status"] == "ok"
+    assert "mata uang berbeda" in result["answer"]
+    assert "dengan selisih" not in result["answer"]
+
+
+def test_single_price_still_uses_original_handler_with_eod_label():
+    price = HargaPalsu(multi_quote("BBRI.JK"))
+    with patch.object(live_compare, "tangani_multi") as multi:
+        result = jawab_dengan_harga("Berapa harga BBRI sekarang?", price)
+    assert result["intent"] == INTENT_LIVE_PRICE
+    assert result["status"] == "ok"
+    assert price.panggilan == ["BBRI.JK"]
+    assert result["resolution"]["ticker"] == "BBRI"
+    assert result["resolutions"] == []
+    assert "bukan kuotasi intraday atau real-time" in result["answer"]
+    multi.assert_not_called()
+
+
+def test_single_stock_entry_plan_keeps_research_and_python_pl():
+    question = ("Bandingkan harga BBRI sekarang jika saya mengikuti entry plannya, "
+                "maka saya saat ini untung atau rugi?")
+    llm, retriever, price = LLMPalsu("Riset [ihsg.pdf hal.12]."), RetrieverPalsu(), HargaPalsu()
+    with patch.object(live_compare, "tangani_multi") as multi:
+        result = jawab_dengan_harga(question, price, llm=llm, retriever=retriever)
+        numeric = jawab_dengan_harga(question + " Saya beli di 4.000.", price,
+                                    llm=llm, retriever=retriever)
+    assert result["intent"] == INTENT_LIVE_COMPARE
+    assert result["status"] == "ok"
+    assert result["documents"] == DOKUMEN
+    assert "[ihsg.pdf hal.12]" in result["answer"]
+    assert set(result["sources_used"]) == {"market_data", "knowledge_base"}
+    assert numeric["profit_loss"]["difference"] == 210.0
+    assert numeric["profit_loss"]["return_percent"] == 5.25
+    assert "Jangan menghitung ulang" in llm.prompt_terakhir
+    assert price.panggilan == ["BBRI.JK", "BBRI.JK"]
+    multi.assert_not_called()

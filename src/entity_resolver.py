@@ -395,6 +395,18 @@ def resolve_explicit(question):
     )
 
 
+def resolve_explicit_many(question):
+    """Resolve each explicit code; caller must establish comparison intent.
+
+    This does not reinterpret semantic alternatives or change the single-
+    entity resolver's ambiguity contract. No session fallback or I/O occurs.
+    """
+    tickers = detect_explicit_tickers(question)
+    if len(tickers) < 2:
+        return []
+    return [resolve_explicit(f"${ticker}") for ticker in tickers]
+
+
 # ============================================================
 # 4. LEVEL 2 - SESSION CONTEXT
 # ============================================================
@@ -710,6 +722,7 @@ __all__ = [
     "normalize_ticker",
     "merujuk_percakapan_sebelumnya",
     "resolve_explicit",
+    "resolve_explicit_many",
     "resolve_from_session",
     "resolve_semantic",
     "resolve_ticker",

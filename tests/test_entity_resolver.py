@@ -241,14 +241,28 @@ def test_casa_tidak_disaring_daftar_hitam():
     assert hasil["ticker"] == "CASA"
 
 
-def test_dua_ticker_menjadi_ambigu_bukan_tebakan():
-    hasil = resolve_ticker(
-        "BBRI dan BMRI mana yang lebih murah?", izinkan_semantik=False
+def test_explicit_comparison_resolves_each_ticker_independently():
+    hasil = entity_resolver.resolve_explicit_many(
+        "Bandingkan harga BBRI dan BMRI sekarang."
     )
+    assert [item["ticker"] for item in hasil] == ["BBRI", "BMRI"]
+    assert all(item["status"] == STATUS_RESOLVED for item in hasil)
+    assert all(item["market"] == "IDX" for item in hasil)
+    assert all(item["llm_calls"] == 0 for item in hasil)
 
+
+def test_multiple_codes_without_comparison_keep_single_entity_ambiguity():
+    hasil = resolve_ticker("Harga BBRI atau BMRI sekarang?", izinkan_semantik=False)
     assert hasil["status"] == STATUS_AMBIGUOUS
     assert set(hasil["candidates"]) == {"BBRI", "BMRI"}
     assert hasil["ticker"] is None
+
+
+def test_explicit_many_deduplicates_and_handles_marked_short_ticker():
+    result = entity_resolver.resolve_explicit_many("Bandingkan $MP vs BBRI dan BBRI")
+    assert [item["ticker"] for item in result] == ["MP", "BBRI"]
+    assert [item["market"] for item in result] == ["NYSE", "IDX"]
+    assert entity_resolver.resolve_explicit_many("Harga BBRI?") == []
 
 
 # ============================================================

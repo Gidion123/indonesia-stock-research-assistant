@@ -144,6 +144,7 @@ The production env file `.env.vps` is ignored by Git and excluded from the Docke
 |---|---|---|
 | "Bagaimana prospek BBRI menurut riset?" | `RAG` | search documents → answer with citations |
 | "Berapa harga BBRI sekarang?" | `LIVE_PRICE` | resolve ticker → market-data module (Yahoo primary, labeled EODHD EOD fallback for supported IDX symbols) |
+| "Bandingkan harga BBRI dan BMRI sekarang." | `LIVE_COMPARE` | compare explicit tickers deterministically; preserve source/EOD labels and partial failures; nominal price is not valuation |
 | "Apakah BBRI sudah mencapai target?" | `LIVE_COMPARE` | market price + target from research |
 | "Saya beli BBRI di 4.000, sekarang untung berapa?" | `LIVE_COMPARE` | profit/loss is calculated in Python, LLM only explains it |
 | "Bagaimana cuaca hari ini?" | `OUT_OF_SCOPE` | rejected by a deterministic topic pattern |
@@ -375,7 +376,7 @@ python -m scripts.evaluate_answers --end-to-end  # answers, through router
 python -m scripts.evaluate_router --llm --semantik
 ```
 
-One file, `evaluation/dataset/eval_questions.json`, supplies retrieval and answer evaluation. The router evaluator has a separate dataset, `evaluation/dataset/router_eval.json`. The frozen snapshots in [`evaluation/baselines/`](evaluation/baselines/README.md) distinguish three benchmarks:
+One file, `evaluation/dataset/eval_questions.json`, supplies retrieval and answer evaluation. The router evaluator has a separate dataset, `evaluation/dataset/router_eval.json`. Router dataset v2 replaces the obsolete two-ticker comparison-as-ambiguity example with an explicit “BBRI atau BMRI” alternative; the saved v1 router scores below were measured before this contract change. The frozen snapshots in [`evaluation/baselines/`](evaluation/baselines/README.md) distinguish three benchmarks:
 
 | Benchmark | Corpus / questions | Retrieval fingerprint |
 |---|---|---|

@@ -6,7 +6,7 @@ Four intents:
 
     RAG           research documents only
     LIVE_PRICE    market price only
-    LIVE_COMPARE  market price compared against the documents
+    LIVE_COMPARE  explicit stock prices, or one price versus the documents
     OUT_OF_SCOPE  not this system's job
 
 Patterns run first because they are free and easy to audit. Words like
@@ -26,6 +26,7 @@ away.
 import re
 
 from src import config
+from src.entity_resolver import detect_explicit_tickers
 
 
 INTENT_RAG = "RAG"
@@ -128,6 +129,24 @@ POLA_JELAS_DI_LUAR = re.compile(
 )
 
 
+# Market-to-market comparison, distinct from a stock versus its research plan.
+POLA_PERBANDINGAN_SAHAM = re.compile(
+    r"\b(?:bandingkan|dibanding(?:kan)?|versus|vs|mana\s+yang\s+lebih)\b",
+    flags=re.IGNORECASE,
+)
+
+
+def is_multi_ticker_market_comparison(question):
+    """Only explicit comparisons without research/position instructions."""
+    return bool(
+        POLA_PERBANDINGAN_SAHAM.search(question)
+        and not POLA_RUJUKAN_RISET.search(question)
+        and not POLA_PROFIT_LOSS.search(question)
+        and not re.search(r"\b(?:kinerja|pendapatan|laba|dividen|rasio)\b", question, re.I)
+        and len(detect_explicit_tickers(question)) > 1
+    )
+
+
 def _cocok(pola, teks):
     return bool(pola.search(teks))
 
@@ -146,6 +165,9 @@ def classify_by_pattern(question):
 
     if _cocok(POLA_JELAS_DI_LUAR, teks):
         return INTENT_OUT_OF_SCOPE, "Topiknya jelas di luar cakupan saham."
+
+    if is_multi_ticker_market_comparison(teks):
+        return INTENT_LIVE_COMPARE, "Membandingkan harga beberapa ticker eksplisit."
 
     sekarang = _cocok(POLA_WAKTU_SEKARANG, teks)
     riset = _cocok(POLA_RUJUKAN_RISET, teks)
@@ -293,6 +315,7 @@ __all__ = [
     "classify_by_pattern",
     "classify_by_llm",
     "classify_router_intent",
+    "is_multi_ticker_market_comparison",
     "butuh_harga",
     "butuh_dokumen",
 ]

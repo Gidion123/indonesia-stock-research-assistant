@@ -38,6 +38,7 @@ from src.entity_resolver import (
     STATUS_AMBIGUOUS,
     STATUS_RESOLVED,
     resolve_ticker,
+    resolve_explicit_many,
 )
 from src.prompts import (
     PESAN_DI_LUAR_CAKUPAN,
@@ -50,6 +51,7 @@ from src.router import (
     INTENT_OUT_OF_SCOPE,
     INTENT_RAG,
     classify_router_intent,
+    is_multi_ticker_market_comparison,
 )
 
 
@@ -68,6 +70,7 @@ KUNCI_HASIL = (
     "answer",
     "router",
     "resolution",
+    "resolutions",
     "market_data",
     "documents",
     "sources_used",
@@ -91,6 +94,8 @@ def _hasil(
     sources_used=None,
     profit_loss=None,
     error=None,
+    resolutions=None,
+    answer_llm_calls=None,
 ):
     router = router or {"method": "none", "reason": "", "llm_calls": 0}
     resolusi_llm = (resolution or {}).get("llm_calls", 0)
@@ -102,6 +107,7 @@ def _hasil(
         "answer": answer,
         "router": router,
         "resolution": resolution,
+        "resolutions": resolutions or [],
         "market_data": market_data,
         "documents": documents or [],
         "sources_used": sources_used or [],
@@ -114,7 +120,10 @@ def _hasil(
         "trace": {
             "router_llm_calls": router.get("llm_calls", 0),
             "resolution_llm_calls": resolusi_llm,
-            "answer_llm_calls": 1 if status == "ok" and intent != INTENT_LIVE_PRICE else 0,
+            "answer_llm_calls": (
+                answer_llm_calls if answer_llm_calls is not None
+                else int(status == "ok" and intent != INTENT_LIVE_PRICE)
+            ),
             "market_data_requested": market_data is not None,
             "market_data_from_cache": bool(
                 (market_data or {}).get("from_cache")
@@ -269,6 +278,19 @@ def jawab(
             )
 
         return result
+
+    # Explicit comparison subjects are separate entities, not alternatives
+    # for one mention. Keep the single-stock research/P&L path below intact.
+    if intent == INTENT_LIVE_COMPARE and is_multi_ticker_market_comparison(question):
+        resolutions = resolve_explicit_many(question)
+        bagian = live_compare.tangani_multi(question, resolutions)
+        return _hasil(
+            question, intent, bagian["status"], bagian["answer"], mulai,
+            router=router, resolutions=resolutions,
+            market_data=bagian["market_data"],
+            sources_used=bagian["sources_used"],
+            error=bagian["error"], answer_llm_calls=0,
+        )
 
     # -------- ENTITY RESOLUTION (live paths; RAG resolved above) ------
     resolution = resolve_ticker(
