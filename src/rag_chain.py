@@ -19,8 +19,14 @@ from functools import lru_cache
 from langchain_core.prompts import ChatPromptTemplate
 
 from src import config
+from src.observability import (
+    get_langfuse_client_if_enabled,
+    safe_error_type,
+    safe_observation_update,
+    text_fingerprint,
+)
 from src.prompts import SYSTEM_PROMPT, SYSTEM_PROMPT_DENGAN_RIWAYAT
-from src.retriever import get_retriever
+from src.retriever import get_retriever, invoke_retriever_observed
 
 
 LLM_PROVIDER = config.LLM_PROVIDER
@@ -148,50 +154,34 @@ def _classify_error(error):
     return "error"
 
 
-def ask_question(
+def _rag_result_level(status):
+    if status == "ok":
+        return "DEFAULT"
+    if status in {"empty_retrieval", "transient_error"}:
+        return "WARNING"
+    return "ERROR"
+
+
+def _rag_result_summary(result):
+    """Privacy-safe trace output; the generated answer/context are not exported."""
+    return {
+        "status": result.get("status"),
+        "has_answer": bool(result.get("answer")),
+        "retrieved_count": len(result.get("documents") or []),
+        "chunk_count": len(result.get("chunk_ids") or []),
+        "latency_seconds": result.get("latency_seconds"),
+        "error_type": safe_error_type(result.get("error")),
+    }
+
+
+def _run_rag_pipeline(
     question,
-    k=None,
-    retriever=None,
-    llm=None,
-    riwayat=None,
-    kueri_retrieval=None,
+    retriever,
+    llm,
+    riwayat,
+    kueri,
 ):
-    """
-    Retrieve relevant context and generate a grounded answer.
-
-    `riwayat` and `kueri_retrieval` are there for follow-up turns:
-
-        kueri_retrieval  the sentence used to SEARCH for documents.
-                         "Kalau prospeknya bagaimana?" contains nothing
-                         searchable, so the caller may fill it out with a
-                         ticker from memory. What is sent to the model is
-                         still the original question.
-
-        riwayat          the last few turns, only so the model can work
-                         out what is being referred to. Facts must still
-                         come from CONTEXT.
-
-    Both default to None, and in that case this path is identical to what
-    it was before memory existed, prompt included.
-
-    Returns a dict with:
-        question          str
-        answer            str | None
-        documents         list[Document]
-        context           str
-        chunk_ids         list[str]
-        status            "ok" | "empty_retrieval" | "transient_error" | "error"
-        error             str | None
-        latency_seconds   float
-    """
-    question = str(question or "").strip()
-
-    if not question:
-        raise ValueError("Pertanyaan tidak boleh kosong.")
-
-    riwayat = str(riwayat or "").strip()
-    kueri = str(kueri_retrieval or "").strip() or question
-
+    """Run the original RAG behavior; observability must not change its result."""
     started = time.perf_counter()
 
     retriever, prompt, llm = create_rag_chain(
@@ -200,7 +190,13 @@ def ask_question(
         dengan_riwayat=bool(riwayat),
     )
 
-    documents = retriever.invoke(kueri)
+    # The retrieval child observation records only safe metadata and document
+    # references. Raw PDF/upload contents are never sent to Langfuse here.
+    documents = invoke_retriever_observed(
+        retriever,
+        kueri,
+        observation_name="rag-retrieval",
+    )
 
     chunk_ids = [
         document.metadata.get("chunk_id")
@@ -250,3 +246,134 @@ def ask_question(
         "error": error,
         "latency_seconds": round(time.perf_counter() - started, 4),
     }
+
+
+def ask_question(
+    question,
+    k=None,
+    retriever=None,
+    llm=None,
+    riwayat=None,
+    kueri_retrieval=None,
+):
+    """
+    Retrieve relevant context and generate a grounded answer.
+
+    `riwayat` and `kueri_retrieval` are there for follow-up turns:
+
+        kueri_retrieval  the sentence used to SEARCH for documents.
+                         "Kalau prospeknya bagaimana?" contains nothing
+                         searchable, so the caller may fill it out with a
+                         ticker from memory. What is sent to the model is
+                         still the original question.
+
+        riwayat          the last few turns, only so the model can work
+                         out what is being referred to. Facts must still
+                         come from CONTEXT.
+
+    Both default to None, and in that case this path is identical to what
+    it was before memory existed, prompt included.
+
+    Returns a dict with:
+        question          str
+        answer            str | None
+        documents         list[Document]
+        context           str
+        chunk_ids         list[str]
+        status            "ok" | "empty_retrieval" | "transient_error" | "error"
+        error             str | None
+        latency_seconds   float
+    """
+    question = str(question or "").strip()
+
+    if not question:
+        raise ValueError("Pertanyaan tidak boleh kosong.")
+
+    riwayat = str(riwayat or "").strip()
+    kueri = str(kueri_retrieval or "").strip() or question
+
+    langfuse = get_langfuse_client_if_enabled()
+
+    if langfuse is None:
+        return _run_rag_pipeline(
+            question=question,
+            retriever=retriever,
+            llm=llm,
+            riwayat=riwayat,
+            kueri=kueri,
+        )
+
+    result = None
+    pipeline_error = None
+
+    try:
+        with langfuse.start_as_current_observation(
+            as_type="chain",
+            name="rag-answer",
+            input={
+                "question_fingerprint": text_fingerprint(question),
+                "question_length": len(question),
+            },
+            metadata={
+                "llm_provider": config.LLM_PROVIDER,
+                "retriever_search_type": config.RETRIEVER_SEARCH_TYPE,
+                "has_history": bool(riwayat),
+                "retrieval_query_rewritten": kueri != question,
+            },
+        ) as observation:
+            try:
+                result = _run_rag_pipeline(
+                    question=question,
+                    retriever=retriever,
+                    llm=llm,
+                    riwayat=riwayat,
+                    kueri=kueri,
+                )
+            except Exception as exception:
+                pipeline_error = exception
+                safe_observation_update(
+                    observation,
+                    level="ERROR",
+                    status_message=type(exception).__name__,
+                    output={
+                        "status": "unhandled_error",
+                        "error_type": type(exception).__name__,
+                    },
+                )
+                raise
+
+            safe_observation_update(
+                observation,
+                output=_rag_result_summary(result),
+                level=_rag_result_level(result.get("status")),
+                status_message=result.get("status"),
+                metadata={
+                    "llm_provider": config.LLM_PROVIDER,
+                    "retriever_search_type": config.RETRIEVER_SEARCH_TYPE,
+                    "has_history": bool(riwayat),
+                    "retrieval_query_rewritten": kueri != question,
+                    "requested_k_argument": k,
+                },
+            )
+
+        return result
+
+    except Exception:
+        if pipeline_error is not None:
+            # Preserve the original application exception exactly as before.
+            raise pipeline_error
+
+        if result is not None:
+            # The RAG request already succeeded. A Langfuse/export failure must
+            # not turn a valid user answer into an application error.
+            return result
+
+        # Langfuse failed before the application pipeline started. Execute the
+        # original RAG path once without requiring observability to be healthy.
+        return _run_rag_pipeline(
+            question=question,
+            retriever=retriever,
+            llm=llm,
+            riwayat=riwayat,
+            kueri=kueri,
+        )

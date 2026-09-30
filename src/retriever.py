@@ -9,8 +9,15 @@ mentions of the requested ticker/company within a wider candidate set.
 from functools import lru_cache
 from datetime import datetime, timezone
 import re
+import time
 
 from src import config
+from src.observability import (
+    get_langfuse_client_if_enabled,
+    safe_document_reference,
+    safe_observation_update,
+    text_fingerprint,
+)
 from src.vector_store import get_session_vector_store, get_vector_store
 
 
@@ -34,12 +41,116 @@ def get_retriever(k=None):
     return retriever
 
 
+def _retriever_k(retriever):
+    """Read the effective top-k without changing the retriever configuration."""
+    direct_k = getattr(retriever, "k", None)
+    if direct_k is not None:
+        return direct_k
+
+    search_kwargs = getattr(retriever, "search_kwargs", None)
+    if isinstance(search_kwargs, dict) and search_kwargs.get("k") is not None:
+        return search_kwargs["k"]
+
+    return config.RETRIEVER_K
+
+
+def invoke_retriever_observed(retriever, query, observation_name="rag-retrieval"):
+    """Invoke a retriever and emit privacy-safe Langfuse retrieval telemetry.
+
+    This wrapper deliberately does not send the raw query or document contents.
+    It records only a query fingerprint, retrieval configuration, returned count,
+    and source/page/chunk references. If Langfuse is disabled or unavailable,
+    retrieval behaves exactly as before.
+    """
+    query = str(query or "").strip()
+    langfuse = get_langfuse_client_if_enabled()
+
+    if langfuse is None:
+        return retriever.invoke(query)
+
+    documents = None
+    retrieval_error = None
+    started = time.perf_counter()
+
+    try:
+        with langfuse.start_as_current_observation(
+            as_type="retriever",
+            name=observation_name,
+            input={
+                "query_fingerprint": text_fingerprint(query),
+                "query_length": len(query),
+            },
+            metadata={
+                "retriever_class": type(retriever).__name__,
+                "search_type": config.RETRIEVER_SEARCH_TYPE,
+                "top_k": _retriever_k(retriever),
+            },
+        ) as observation:
+            try:
+                documents = retriever.invoke(query)
+            except Exception as exception:
+                retrieval_error = exception
+                safe_observation_update(
+                    observation,
+                    level="ERROR",
+                    status_message=type(exception).__name__,
+                    metadata={
+                        "retriever_class": type(retriever).__name__,
+                        "search_type": config.RETRIEVER_SEARCH_TYPE,
+                        "top_k": _retriever_k(retriever),
+                        "latency_seconds": round(time.perf_counter() - started, 4),
+                    },
+                )
+                raise
+
+            references = [
+                safe_document_reference(document, rank=index)
+                for index, document in enumerate(documents, start=1)
+            ]
+            latency_seconds = round(time.perf_counter() - started, 4)
+
+            safe_observation_update(
+                observation,
+                output={
+                    "retrieved_count": len(documents),
+                    "documents": references,
+                },
+                metadata={
+                    "retriever_class": type(retriever).__name__,
+                    "search_type": config.RETRIEVER_SEARCH_TYPE,
+                    "top_k": _retriever_k(retriever),
+                    "retrieved_count": len(documents),
+                    "latency_seconds": latency_seconds,
+                },
+                level="DEFAULT" if documents else "WARNING",
+                status_message=None if documents else "empty_retrieval",
+            )
+
+        return documents
+
+    except Exception:
+        if retrieval_error is not None:
+            # Preserve the original retrieval failure instead of hiding it behind
+            # an observability error.
+            raise retrieval_error
+
+        if documents is not None:
+            # Retrieval already succeeded; a tracing/export issue must not make
+            # the application repeat the PgVector query or fail the request.
+            return documents
+
+        # Langfuse failed before retrieval started. Run the original path once.
+        return retriever.invoke(query)
+
+
 def retrieve_documents(query, k=None):
     """
     Retrieve the documents relevant to a user query.
     """
     retriever = get_retriever(k)
 
+    # Historical/offline evaluation intentionally keeps the original untraced
+    # path so benchmark runs do not generate production observability traffic.
     documents = retriever.invoke(query)
 
     return documents

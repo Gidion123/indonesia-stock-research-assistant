@@ -10,6 +10,10 @@ sentence-transformers==3.4.1
 transformers==4.57.6
 huggingface-hub==0.36.2
 langsmith==0.14.0
+
+# Observability
+langfuse==4.15.4
+
 orjson==3.12.0
 numpy==2.2.4
 pandas==2.2.3

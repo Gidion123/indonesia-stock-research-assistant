@@ -1,6 +1,7 @@
 services:
   db:
     image: pgvector/pgvector:pg16
+
     environment:
       POSTGRES_USER: rag
       POSTGRES_DB: rag_stock_assistant
@@ -32,6 +33,14 @@ services:
       DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
       LLM_PROVIDER: deepseek
       INCLUDE_ADDITIONAL_DOCUMENTS: "false"
+
+      # Langfuse Cloud observability.
+      # Credentials are supplied only through .env.vps and are never committed.
+      LANGFUSE_PUBLIC_KEY: ${LANGFUSE_PUBLIC_KEY:-}
+      LANGFUSE_SECRET_KEY: ${LANGFUSE_SECRET_KEY:-}
+      LANGFUSE_BASE_URL: ${LANGFUSE_BASE_URL:-https://jp.cloud.langfuse.com}
+      LANGFUSE_TRACING_ENVIRONMENT: ${LANGFUSE_TRACING_ENVIRONMENT:-production}
+      LANGFUSE_TRACING_ENABLED: "${LANGFUSE_TRACING_ENABLED:-false}"
 
       # Market data.
       # Yahoo Finance tetap provider utama.

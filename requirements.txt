@@ -82,7 +82,7 @@ pytest==8.3.5
 # =========================
 rank-bm25==0.2.2
 ipywidgets==8.1.5
-langfuse==3.0.3
+langfuse==4.15.4
 
 # API for realtime Stock Price
 yfinance==1.7.0
