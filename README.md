@@ -16,12 +16,14 @@
 
 ## Table of Contents
 
+- [Production Engineering Highlights](#production-engineering-highlights)
 - [Overview](#overview)
 - [Quick Start](#quick-start)
 - [Deploy on SumoPod VPS](#deploy-on-sumopod-vps)
 - [What It Can Do](#what-it-can-do)
 - [User Flow](#user-flow)
 - [Architecture](#architecture)
+- [Production Monitoring & Observability](#production-monitoring--observability)
 - [Evaluation Results](#evaluation-results)
 - [Project Structure](#project-structure)
 - [Testing](#testing)
@@ -30,6 +32,22 @@
 - [Public Upload Isolation](#public-upload-isolation)
 - [Limitations and Next Steps](#limitations-and-next-steps)
 - [License](#license)
+
+---
+
+## Production Engineering Highlights
+
+Current production state as of **1 October 2026**:
+
+| Engineering area | Implemented evidence |
+|---|---|
+| Deployment | SumoPod Ubuntu VPS; Docker Compose; Caddy HTTPS; loopback-only Streamlit and private PostgreSQL |
+| Financial correctness | Python profit/loss calculations; deterministic single-price and multi-ticker formatting; explicit EOD fallback labels |
+| Infrastructure monitoring | Grafana Cloud + Alloy Linux telemetry; node-missing alert firing and recovery tested |
+| Public availability | Independent Jakarta/Singapore synthetic probes; HTTP failure, recovery and email notifications tested |
+| RAG / LLM observability | Langfuse production traces, retrieval references, latency, provider token usage and configured cost calculation |
+| Privacy | Session-isolated uploads; telemetry excludes raw questions, PDF text, prompts and complete answers |
+| Validation | Latest full local regression: **432 passed, 4 skipped**; current 33-question benchmark and known retrieval misses documented below |
 
 ---
 
@@ -128,12 +146,13 @@ The production env file `.env.vps` is ignored by Git and excluded from the Docke
 
 ### Verified production state
 
-- Public HTTPS health endpoint returns `ok`.
+- Public HTTPS [health endpoint](https://stockresearch-ai.duckdns.org/_stcore/health) returns HTTP 200 (`ok`).
 - `db` is healthy; `app` is healthy; `cleanup` is running.
 - The production smoke test passed for `RAG`, `LIVE_PRICE`, `LIVE_COMPARE`, and deterministic profit/loss behavior.
 - Yahoo Finance remains the primary market-data provider. On the production VPS, Yahoo rate limiting was reproduced, and the tested IDX fallback returned explicitly labeled EODHD end-of-day data instead of presenting stale data as live.
 - UFW is active with inbound access limited to SSH (`22`), HTTP (`80`), and HTTPS (`443`); Streamlit (`8501`) remains loopback-only and PostgreSQL is not exposed publicly.
 - SSH authentication is key-based; password authentication, keyboard-interactive authentication, and root SSH login are disabled.
+- Grafana infrastructure and synthetic alert firing/recovery were tested; Langfuse production tracing is active after the observability deployment. A successful RAG smoke test returned eight documents/chunks, an answer, and a flushed trace with retrieval, generation usage and calculated Peak-tier cost. See [monitoring and observability](#production-monitoring--observability).
 - A PostgreSQL custom-format production backup was created, validated with `pg_restore -l`, copied off the VPS to a separate machine, and a SHA-256 checksum was recorded for the off-server copy.
 
 ---
@@ -334,7 +353,8 @@ Python can produce the sentence exactly, it does.
 |---|---|---|
 | `RAG` | **LLM** | The answer has to be written from the eight retrieved chunks. |
 | `LIVE_PRICE` | **No LLM** | There is one number to report. Python formats the sentence directly. Calling a model to wrap a single number adds latency, cost, and one more chance for that number to change on the way through. |
-| `LIVE_COMPARE` | **LLM** | Three sources have to be reconciled: the market price, the profit/loss Python already computed, and the retrieved research. The model writes it up but is forbidden to recalculate. |
+| `LIVE_COMPARE` — price vs research / position | **LLM when relevant research is available** | Three sources have to be reconciled: the market price, the profit/loss Python already computed, and the retrieved research. The model writes it up but is forbidden to recalculate. |
+| `LIVE_COMPARE` — multiple explicit tickers | **No LLM** | Python compares both quotes, preserves source/EOD labels and reports partial failures. Nominal price does not measure valuation. |
 | `OUT_OF_SCOPE` | **No LLM** | A fixed refusal message. |
 
 This table describes final answer generation. Earlier routing and semantic
@@ -350,6 +370,25 @@ note without involving the model either.
 Profit and loss is always computed in Python, before the model sees
 anything. The model receives a finished number and explains it.
 
+### Production Deployment and Telemetry
+
+```text
+Internet HTTPS :443 → Caddy → 127.0.0.1:8501 Streamlit
+                                  ├── PostgreSQL + pgvector (private)
+                                  ├── DeepSeek / Groq
+                                  ├── Yahoo Finance / EODHD
+                                  └── safe RAG/LLM observations → Langfuse Cloud
+
+VPS Linux host → Grafana Alloy → Grafana Cloud metrics and alerts
+
+Grafana Synthetic Monitoring (Jakarta / Singapore)
+   └── external HTTPS GET → public /_stcore/health endpoint
+```
+
+Alloy exports host telemetry. Synthetic probes independently check the public
+HTTPS endpoint. Langfuse records application-level retrieval and generation
+observations; it does not collect CPU/RAM metrics.
+
 ### Rules Behind the Design
 
 The following behavior is implemented in code or explicitly required by prompts; tests and offline evaluations cover different parts of it.
@@ -363,6 +402,160 @@ The following behavior is implemented in code or explicitly required by prompts;
 7. **Identity memory stores ticker, company, and exchange only.** Conversation history also stores short question/answer text, which can contain past prices. That history is not used as the current-price source; live paths call the market-data module, which may serve its configured cache.
 8. **Yahoo Finance is the primary price provider; EODHD is an explicit fallback, not a second “live” quote.** For supported IDX symbols, transient Yahoo failures or rate limits can fall back to end-of-day data. The formatter preserves the source and labels the result as EOD so it is not presented as current exchange data.
 9. **Prompts require citations.** Offline evaluation checks cited source/page pairs against retrieved documents. It does not prove factual entailment, and the app has no automatic runtime citation validator.
+
+---
+
+## Production Monitoring & Observability
+
+Monitoring and observability are deployed and active. The evidence below comes
+from implementation and controlled production checks on 28 September–1 October
+2026. These checks validate failure detection and telemetry; they are not an SLA
+or a claim of factual answer accuracy.
+
+### Infrastructure Monitoring
+
+Grafana Alloy on the SumoPod VPS exports Linux Server metrics to Grafana Cloud
+(stack `crimsonpond3440`). Fleet identifies the host as `VM-24-137-ubuntu`.
+CPU, RAM, swap, filesystem/disk and node availability are monitored.
+
+<p align="center">
+  <img src="figures/observability/grafana-vps-infrastructure-overview.png" alt="Production Linux node CPU and memory telemetry with swap and root filesystem capacity" width="900">
+</p>
+
+> The Linux node overview shows host capacity and observed CPU/RAM activity.
+> This capture shows swap and filesystem capacity, not their complete usage dashboards.
+
+The custom **`VPSNodeMetricsMissing`** alert uses:
+
+```promql
+absent_over_time(
+  up{
+    job="integrations/node_exporter",
+    instance="VM-24-137-ubuntu"
+  }[5m]
+)
+OR on() vector(0)
+```
+
+It evaluates approximately every minute with no pending delay, `severity=critical`,
+and the email contact point `stock-research-vps-email`. In a controlled test,
+Alloy was stopped; metrics disappeared, the alert fired and an email arrived.
+Restarting Alloy restored metrics, resolved the alert and produced a recovery
+email. **Alert firing and recovery were tested end-to-end.**
+
+<p align="center">
+  <img src="figures/observability/grafana-node-metrics-alert-firing.png" alt="VPSNodeMetricsMissing alert firing after Alloy stopped reporting node metrics" width="900">
+</p>
+
+> The alert changes to Firing when node telemetry is absent for the configured window.
+> This detects missing telemetry; it does not by itself prove the VPS is down.
+
+### Synthetic Uptime Monitoring
+
+**`StockResearch:HTTP-Health`** independently probes the public
+[Streamlit health endpoint](https://stockresearch-ai.duckdns.org/_stcore/health)
+from **Jakarta and Singapore**. It uses HTTP GET, requires SSL and a successful
+2xx response, with an approximately three-second timeout and five-minute interval.
+Labels are `environment=production` and `service=stock-research-assistant`.
+These external probes do not depend on Alloy.
+
+The alert **`ProbeFailedExecutionsTooHigh [5m]`** was tested by deliberately
+stopping the application: the public endpoint returned HTTP 502, probes failed,
+the alert fired and a notification email arrived. Restarting the app restored
+HTTP 200; probes recovered and a recovery notification arrived.
+
+<p align="center">
+  <img src="figures/observability/grafana-synthetic-health-monitoring.png" alt="Synthetic public health check showing the controlled failure window and firing alert" width="900">
+</p>
+
+> The red interval records the deliberate outage test. Percentages in this short
+> test window are not a long-term production availability measurement.
+
+<p align="center">
+  <img src="figures/observability/grafana-synthetic-alert-recovery.png" alt="Grafana email body confirming the synthetic health alert resolved after recovery" width="750">
+</p>
+
+> The sanitized notification body confirms a resolved synthetic alert after recovery.
+
+### RAG Observability
+
+Langfuse Cloud in **Tokyo, Japan**, project `stock-research-assistant`, records:
+
+```text
+rag-answer
+├── rag-retrieval
+└── llm-generation
+```
+
+Retrieval spans include safe references (`chunk_id`, source, page, category and
+rank), document/chunk counts, latency and status. Development and production
+traces were validated. The latest production smoke test reported `status=ok`,
+eight documents and eight chunks, an answer present, and a successfully flushed
+trace in the `production` environment.
+
+### LLM Usage & Cost Observability
+
+The shared wrapper instruments LLM calls in RAG generation, router fallback,
+semantic entity resolution and applicable price/comparison synthesis. Deterministic
+paths do not need generation spans. It records purpose, provider/model, latency,
+status, sanitized error type and **provider-reported token usage** when available.
+No token count is inferred from character lengths when usage metadata is missing.
+
+DeepSeek cache-hit and cache-miss inputs use separate billing buckets;
+reasoning tokens are diagnostic metadata already included in output tokens.
+Langfuse's custom `deepseek-flash` model definition matches
+`(?i)^deepseek-flash$` and prices `input_cache_hit`, `input_cache_miss` and `output`.
+The aggregate `total` bucket is not priced again. Peak and Off-Peak tiers are
+configured in Langfuse; safe UTC weekday/hour metadata supports tier selection.
+Prices are not hard-coded into the application's business logic.
+
+**One validated production generation on 1 October 2026** used model
+`deepseek-flash`, approximately **0.06 s retrieval** and **1.71 s generation**,
+with **1,693 input + 293 output = 1,986 total tokens**. The selected tier was
+**Peak Tier Pricing**. The configured rates for that example reconcile as follows:
+
+| Usage bucket | Tokens | Configured USD / token | Calculated USD |
+|---|---:|---:|---:|
+| Input cache hit | 1,536 | 0.000000006 | 0.000009216 |
+| Input cache miss | 157 | 0.000000300 | 0.000047100 |
+| Output | 293 | 0.000001200 | 0.000351600 |
+| **Total** | **1,986** | — | **0.000407916** |
+
+The input subtotal is $0.000056316. The manual sum matches Langfuse's displayed
+**$0.000407916**. This is one observed generation, not a fixed cost per request,
+a complete session cost or an average latency benchmark.
+
+<p align="center">
+  <img src="figures/observability/langfuse-production-llm-usage.png" alt="Langfuse production trace hierarchy and DeepSeek cache hit, cache miss and output token usage" width="1000">
+</p>
+
+> Provider usage shows 1,536 cached and 157 uncached input tokens, plus 293 output tokens.
+> The trace tree separates retrieval from generation.
+
+<p align="center">
+  <img src="figures/observability/langfuse-production-llm-cost.png" alt="Langfuse production generation cost breakdown under Peak Tier Pricing totaling USD 0.000407916" width="1000">
+</p>
+
+> Peak-tier cost calculation for the same production generation; the aggregate total is not billed twice.
+
+### Privacy-First Telemetry
+
+Tracing intentionally excludes raw questions, PDF page text, full retrieved
+context, prompts, complete generated answers, session owner IDs and credentials.
+Question correlation uses a short SHA-256 fingerprint and length. Input/output
+panels contain operational summaries rather than raw content. Safe source names
+and page numbers remain visible for retrieval debugging.
+
+Observability is opt-in and designed to **fail open**: if Langfuse is unavailable,
+an otherwise successful retrieval/provider call should still serve the user.
+Tracing failures should not repeat retrieval or issue another paid generation;
+regression tests cover failures at observation startup and exit. Provider errors
+retain the existing application handling. This is not a guarantee against every
+possible external failure.
+
+Implementation: [`src/observability.py`](src/observability.py),
+[`src/retriever.py`](src/retriever.py), [`src/rag_chain.py`](src/rag_chain.py),
+and [`tests/test_observability.py`](tests/test_observability.py).
 
 ---
 
@@ -514,6 +707,7 @@ src/
   memory.py              conversation memory (identity + history)
   session_context.py     conversation identity; rejects price fields
   assistant.py           orchestrator: directs the flow, does not do the work
+  observability.py       privacy-first Langfuse retrieval/LLM tracing and usage
   rag_chain.py           retrieve → prompt → cited answer
   retriever.py           similarity baseline + session-scoped subject ranking
   vector_store.py        curated and temporary PgVector tables
@@ -548,6 +742,8 @@ evaluation/dataset/
 app.py                   Streamlit interface
 notebooks/               early experiments
 tests/                   unit, regression and integration tests
+  test_observability.py  privacy, token buckets and tracing failure behavior
+figures/observability/   sanitized production monitoring and trace evidence
 ```
 
 ---
@@ -558,15 +754,24 @@ tests/                   unit, regression and integration tests
 HF_HUB_OFFLINE=1 TRANSFORMERS_OFFLINE=1 python -m pytest -q --tb=short
 ```
 
-**Latest full local regression, 27 September 2026:**
-**383 passed, 4 skipped in 57.91 seconds**, including real LLM tests, local
-PostgreSQL and cached embeddings. Skips: three opt-in live market tests and
-one BIPI test requiring the optional additional corpus. The corpus remains
-5 PDFs / 117 source pages / 105 kept pages / 489 chunks. The separate current
-retrieval and live answer evaluations are reported above; pytest is a
-functional regression result, not an answer-quality score.
+**Latest full local regression after the production observability work,
+1 October 2026: 432 passed, 4 skipped, zero failures/errors** (436 tests considered).
+This validated run used local PostgreSQL. The four intentional skips are three
+opt-in live market-data tests and one BIPI/additional-document test.
+**Observability-specific suite: 19 passed**, independently rerun during this
+documentation update (0.22 s, mocked services). The full-suite count above is
+the supplied latest validated implementation result; the full suite was not rerun here.
+The corpus remains 5 PDFs / 117 source pages / 105 retained pages / 489 chunks.
 
-After the memory update on 26 September 2026, the full suite against a disposable PostgreSQL/pgvector database populated with the current 489 chunks completed with **373 passed, 8 skipped**. The run used cached embeddings and dummy API keys; external LLM/market calls were excluded. The real-retrieval memory simulation also passed all nine turns across two sessions. The separate disposable pgvector isolation simulation covers concurrent uploads, 100 scoped searches, quota races, and expiry checks.
+| Validation | What it establishes |
+|---|---|
+| pytest | Functional/regression behavior; not factual answer accuracy |
+| Retrieval evaluation | Annotated evidence ranking on a fingerprinted dataset |
+| Answer evaluation | Expected-keyword coverage, citation behavior and refusal |
+| Production smoke | Deployment health and exercised application paths |
+| Monitoring / trace validation | Alert delivery/recovery and safe telemetry/usage/cost export |
+
+**Historical validation:** after the memory update on 26 September 2026, the full suite against a disposable PostgreSQL/pgvector database populated with the current 489 chunks completed with **373 passed, 8 skipped**. The run used cached embeddings and dummy API keys; external LLM/market calls were excluded. The real-retrieval memory simulation also passed all nine turns across two sessions. The separate disposable pgvector isolation simulation covers concurrent uploads, 100 scoped searches, quota races, and expiry checks.
 
 Before production deployment, the project also passed Compose configuration validation, a Docker image build, `pip check` inside that image, and an offline parse producing the same 489 chunks. The image check found no `.env` files, Streamlit secrets, or local virtual environment in `/app`, and the documented source transfer excluded local credentials.
 
@@ -592,8 +797,9 @@ two sessions, company-name recognition, short follow-ups, price routing, and
 an explicit switch to another ticker. It makes no paid LLM or Yahoo requests;
 it does not evaluate the quality of real model answers.
 
-**Existing local index after the memory update:** rebuild the curated index
-because bibliography filtering changed. Stop Streamlit, use the existing
+**Historical local migration from the 527-chunk index:** bibliography filtering
+required a rebuild. The current 489-chunk production index needs no re-ingestion
+for monitoring or observability. Only when migrating that older local index, stop Streamlit and use the existing
 project environment and database, then run:
 
 ```bash
@@ -622,6 +828,10 @@ All configurable values are in `src/config.py`, and they are stored with each ev
 | Retriever | Similarity candidates, final k=8 | Session searches fetch up to 48 candidates per table for a focused ticker/company query, prioritize matching text, and return 8 chunks. Generic queries use similarity directly. |
 | LLM | DeepSeek (default), Groq alternative | Selected through one `LLM_PROVIDER` variable and created in `get_llm()`, so changing providers does not affect the rest of the logic. |
 | Market data | Yahoo Finance via `yfinance` 1.7.0 + EODHD EOD fallback | Yahoo remains the primary source. For supported IDX symbols, transient Yahoo failures or rate limits can fall back to end-of-day data that is explicitly labeled as EOD rather than live. |
+| Observability | Langfuse Cloud | Privacy-first retrieval/LLM traces, provider-reported usage, latency and configured cost calculation. |
+| Infrastructure monitoring | Grafana Cloud + Alloy | Linux VPS metrics, node availability and infrastructure alerts. |
+| Synthetic monitoring | Grafana Synthetic Monitoring | Independent public HTTPS health checks from Jakarta and Singapore. |
+| Reverse proxy / TLS | Caddy | HTTPS termination while Streamlit remains loopback-only. |
 | Interface | Streamlit 1.44.1 | The interface contains no business logic; it only handles the UI and calls `jawab()`. |
 
 ---
@@ -629,6 +839,7 @@ All configurable values are in `src/config.py`, and they are stored with each ev
 ## Data & Credential Handling
 
 - Credentials come from environment variables: local development loads `.env`, while the VPS Compose deployment reads `.env.vps` on the server. Both real files are ignored by Git and excluded from the Docker build context; example files contain placeholders only. LLM, database, and EODHD credentials are never documented with real values in the repository.
+- Observability credentials are environment variables (`LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, `LANGFUSE_BASE_URL`, with explicit `LANGFUSE_TRACING_ENABLED`). Langfuse receives safe summaries and references, not raw question/context/answer text. Published screenshots are sanitized derivatives; original captures remain local. No real credentials or account details belong in documentation or figures.
 - The interface never shows the model name, API key, PgVector configuration, or router traces, and there is a test to protect this.
 - Public uploads are parsed from memory; the application does not persist the raw PDF as a file. Their chunks live in `stock_session_knowledge`, separate from the curated `stock_knowledge` table. Text chunks included in an answer prompt are sent to the configured LLM provider. The legacy `additional/` directory remains available for offline experiments but is not read by the public upload path.
 - Document content is untrusted input. The prompt labels document context separately from instructions; citation/source matching is measured in offline evaluation, not enforced during app responses. However, the system has **not** been specifically tested against prompt injection through PDF content.
@@ -666,13 +877,14 @@ The curated table must be rebuilt from `primary/` during migration so it contain
 - Research answers are prompted to use the knowledge base. Unsupported answers and incorrect citations remain possible because generation is not automatically fact-checked.
 - Conversation memory lives during the session and is cleared when "Percakapan baru" is selected or the page is reloaded.
 - The current five-document benchmark has 33 questions and includes document 5, but is small and not held out. CLI end-to-end uses similarity retrieval; the UI's session ranking and multi-turn experience require separate measurement.
-- Runtime monitoring and LLM/RAG observability are not yet part of the deployed stack.
+- Infrastructure/synthetic monitoring and Langfuse tracing verify operational behavior; neither automatically verifies the factual correctness of investment research answers.
+- Cost telemetry uses provider-reported usage and the configured Langfuse pricing model. Provider prices can change and should be reviewed periodically.
 
 **The most important design decision:** the router runs before retrieval. Obvious unrelated questions stop without an LLM call, and it keeps unnecessary retrieval, market-data, and generation work off paths that do not need it.
 
 **Current retrieval limitations:** the similarity benchmark misses `ihsg_02`, `equity_03`, `dc_01`, and `dc_05` at k=8. Relevant evidence exists but ranks too low; paragraph/table continuations can lose topical or company context. An adjacent-chunk experiment was rejected after regressions. The existing UI's hard entity priority also under-ranks some continuation passages.
 
-**Recommendation after this pass:** stop here with the measured baseline and documented limitations. A separate small experiment could soften entity priority while preserving session/expiry filtering, and must pass the same benchmark gate before adoption. Monitoring and observability remain optional later phases.
+**Recommendation after this pass:** stop here with the measured baseline and documented limitations. A separate small experiment could soften entity priority while preserving session/expiry filtering, and must pass the same benchmark gate before adoption. Monitoring and observability are now deployed; keep the measured retrieval limitations visible when planning further experiments.
 
 ---
 
