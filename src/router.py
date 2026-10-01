@@ -27,6 +27,7 @@ import re
 
 from src import config
 from src.entity_resolver import detect_explicit_tickers
+from src.observability import invoke_llm_observed
 
 
 INTENT_RAG = "RAG"
@@ -227,7 +228,15 @@ def classify_by_llm(question, llm=None):
 
             llm = get_llm()
 
-        response = llm.invoke(PROMPT_ROUTER.format(question=question))
+        prompt = PROMPT_ROUTER.format(question=question)
+        response = invoke_llm_observed(
+            llm,
+            prompt,
+            purpose="router",
+            question=question,
+            provider=config.LLM_PROVIDER,
+            safe_metadata={"routing_stage": "llm_fallback"},
+        )
         payload = extract_json_object(str(response.content or ""))
 
     except Exception as exception:

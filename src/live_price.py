@@ -14,6 +14,7 @@ from src.market_data import (
     ringkas_untuk_pengguna,
 )
 from src.market_symbols import build_yahoo_symbol
+from src.observability import invoke_llm_observed
 from src.prompts import (
     PESAN_TICKER_TIDAK_DIKENAL,
     pesan_harga_gagal,
@@ -84,11 +85,19 @@ def tangani(question, resolution, llm=None, gunakan_llm=False):
 
             llm = get_llm()
 
-        response = llm.invoke(
-            PROMPT_LIVE_PRICE.format(
-                market_data=format_market_data(data, _label(resolution)),
-                question=question,
-            )
+        prompt = PROMPT_LIVE_PRICE.format(
+            market_data=format_market_data(data, _label(resolution)),
+            question=question,
+        )
+        response = invoke_llm_observed(
+            llm,
+            prompt,
+            purpose="live_price",
+            question=question,
+            safe_metadata={
+                "market_data_available": True,
+                "uses_research": False,
+            },
         )
         jawaban = str(response.content or "").strip()
 

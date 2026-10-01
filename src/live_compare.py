@@ -21,6 +21,7 @@ Three rules here:
 
 from src.market_data import ambil_harga, format_market_data, ringkas_untuk_pengguna
 from src.market_symbols import build_yahoo_symbol
+from src.observability import invoke_llm_observed
 from src.profit_loss import (
     ekstrak_harga_entry,
     format_profit_loss,
@@ -143,14 +144,25 @@ def tangani(question, resolution, llm=None, retriever=None, k=None):
 
             llm = get_llm()
 
-        response = llm.invoke(
-            PROMPT_LIVE_COMPARE.format(
-                market_data=format_market_data(data, _label(resolution)),
-                profit_loss=format_profit_loss(profit_loss)
-                or "PERHITUNGAN POSISI: tidak diminta.",
-                context=_format_context(documents),
-                question=question,
-            )
+        context = _format_context(documents)
+        prompt = PROMPT_LIVE_COMPARE.format(
+            market_data=format_market_data(data, _label(resolution)),
+            profit_loss=format_profit_loss(profit_loss)
+            or "PERHITUNGAN POSISI: tidak diminta.",
+            context=context,
+            question=question,
+        )
+        response = invoke_llm_observed(
+            llm,
+            prompt,
+            purpose="live_compare",
+            question=question,
+            safe_metadata={
+                "context_length": len(context),
+                "retrieved_count": len(documents),
+                "has_profit_loss": bool(profit_loss),
+                "market_data_available": True,
+            },
         )
         jawaban = str(response.content or "").strip()
         status = "ok" if jawaban else "error"

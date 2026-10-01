@@ -21,6 +21,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from src import config
 from src.observability import (
     get_langfuse_client_if_enabled,
+    invoke_llm_observed,
     safe_error_type,
     safe_observation_update,
     text_fingerprint,
@@ -225,7 +226,18 @@ def _run_rag_pipeline(
     messages = prompt.format_messages(**slot)
 
     try:
-        response = llm.invoke(messages)
+        response = invoke_llm_observed(
+            llm,
+            messages,
+            purpose="rag_answer",
+            question=question,
+            provider=config.LLM_PROVIDER,
+            safe_metadata={
+                "context_length": len(context),
+                "retrieved_count": len(documents),
+                "has_history": bool(riwayat),
+            },
+        )
         answer = str(response.content or "").strip()
 
         status = "ok" if answer else "error"

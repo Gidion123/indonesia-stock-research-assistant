@@ -40,6 +40,7 @@ does appear in the retrieved context.
 import re
 
 from src import config
+from src.observability import invoke_llm_observed
 
 # The resolver must NOT touch market_data or yfinance. What is imported
 # below is purely symbol-shape constants - used to strip a suffix the
@@ -549,7 +550,17 @@ def resolve_semantic(
             question=question,
         )
 
-        response = llm.invoke(prompt)
+        response = invoke_llm_observed(
+            llm,
+            prompt,
+            purpose="entity_resolution",
+            question=question,
+            provider=config.LLM_PROVIDER,
+            safe_metadata={
+                "context_length": len(context),
+                "retrieved_count": len(documents),
+            },
+        )
         payload = extract_json_object(str(response.content or ""))
 
     except Exception as exception:
